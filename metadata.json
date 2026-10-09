@@ -1,0 +1,8 @@
+{
+  "name": "Fedorov- Harmonic Synthesis",
+  "description": "A quantum-grade crystallographic explorer integrating Fedorov's 230 space groups with Sasha's Harmonic Resonance Module (SHRM) for frequency-based symmetry analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
