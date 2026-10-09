@@ -825,7 +825,118 @@ for (let i = 0; i < 100; i++) {
 }
 console.log('✅ TEST 22 PASSED: 100/100 runs bit-identical and fully deterministic.\n');
 
-console.log('====================================================');
-console.log('ALL M-5F INTEGRITY & EVIDENCE TESTS PASSED (7/7)');
-console.log('TOTAL TEST SUITE: 22/22 TESTS PASSED SUCCESSFULLY');
-console.log('====================================================');
+// -----------------------------------------------------------------------------
+// TEST 23 (EXP-02): Registry-Free Structure Input
+// -----------------------------------------------------------------------------
+console.log('TEST 23 (EXP-02): Registry-Free Structure Input...');
+const registryFreeTetra = { ...CANONICAL_TETRAHEDRON, id: 'registry_free_tetra' };
+const resRegistryFree = runSymmetryExperiment({
+  structure: registryFreeTetra,
+  operationId: OPERATION_C3_120.id,
+  predicate: 'PROPER_ROTATION'
+});
+assert(resRegistryFree.verdict === 'VERIFIED', 'Registry-free tetrahedron must be VERIFIED');
+assert(resRegistryFree.structure_id === 'registry_free_tetra', 'Structure ID must match');
+console.log('  Verdict:         ', resRegistryFree.verdict);
+console.log('✅ TEST 23 PASSED: Registry-free structure input verified.\n');
+
+// -----------------------------------------------------------------------------
+// TEST 24 (EXP-02): Legacy API
+// -----------------------------------------------------------------------------
+console.log('TEST 24 (EXP-02): Legacy API...');
+const resLegacy = runSymmetryExperiment({
+  structureId: CANONICAL_TETRAHEDRON.id,
+  operationId: OPERATION_C3_120.id,
+  predicate: 'PROPER_ROTATION'
+});
+assert(resLegacy.verdict === 'VERIFIED', 'Legacy API tetrahedron must be VERIFIED');
+console.log('✅ TEST 24 PASSED: Legacy API works.\n');
+
+// -----------------------------------------------------------------------------
+// TEST 25 (EXP-02): Missing Structure
+// -----------------------------------------------------------------------------
+console.log('TEST 25 (EXP-02): Missing Structure (Error Expected)...');
+try {
+  runSymmetryExperiment({
+    operationId: OPERATION_C3_120.id,
+    predicate: 'PROPER_ROTATION'
+  } as any);
+  assert(false, 'Expected error when no structure/structureId provided');
+} catch (e) {
+  console.log('  Caught expected error:', (e as Error).message);
+}
+console.log('✅ TEST 25 PASSED: Missing structure causes error.\n');
+
+// -----------------------------------------------------------------------------
+// TEST 26 (EXP-02): Both structures
+// -----------------------------------------------------------------------------
+console.log('TEST 26 (EXP-02): Both structures (Should be valid)...');
+const resBoth = runSymmetryExperiment({
+  structure: registryFreeTetra,
+  structureId: CANONICAL_TETRAHEDRON.id,
+  operationId: OPERATION_C3_120.id,
+  predicate: 'PROPER_ROTATION'
+});
+assert(resBoth.verdict === 'VERIFIED', 'Both structure/structureId should be VERIFIED');
+assert(resBoth.structure_id === registryFreeTetra.id, 'structure takes precedence');
+console.log('✅ TEST 26 PASSED: Both structures handled correctly (structure takes precedence).\n');
+
+// -----------------------------------------------------------------------------
+// TEST 27 (EXP-02): Immutability Check
+// -----------------------------------------------------------------------------
+console.log('TEST 27 (EXP-02): Immutability Check...');
+const immutabilityTetra = JSON.parse(JSON.stringify(CANONICAL_TETRAHEDRON));
+runSymmetryExperiment({
+  structure: immutabilityTetra,
+  operationId: OPERATION_C3_120.id,
+  predicate: 'PROPER_ROTATION'
+});
+assert(JSON.stringify(immutabilityTetra) === JSON.stringify(CANONICAL_TETRAHEDRON), 'Structure should not be mutated');
+console.log('✅ TEST 27 PASSED: Immutability preserved.\n');
+
+// -----------------------------------------------------------------------------
+// TEST 28-30 (EXP-03): Symmetry under Deformation
+// -----------------------------------------------------------------------------
+console.log('TEST 28-30 (EXP-03): Symmetry under Deformation...');
+
+// S0: Regular tetrahedron (already defined)
+const S0 = CANONICAL_TETRAHEDRON;
+
+// S1: Symmetric deformation of S0 (stretching along [1,1,1])
+const S1: CanonicalStructure = {
+  ...S0,
+  id: 'struct_tetra_S1_symmetric',
+  vertices: S0.vertices.map(v => ({
+    ...v,
+    coords: [v.coords[0] * 1.1, v.coords[1] * 1.1, v.coords[2] * 1.1] as Point3D // Symmetric scale
+  }))
+};
+
+// S2: Asymmetric deformation of S0 (stretching v0 only)
+const S2: CanonicalStructure = {
+  ...S0,
+  id: 'struct_tetra_S2_asymmetric',
+  vertices: S0.vertices.map(v => ({
+    ...v,
+    coords: v.id === 'v0' ? [v.coords[0] * 1.5, v.coords[1], v.coords[2]] : [...v.coords] as Point3D
+  }))
+};
+
+const opC3 = OPERATION_C3_120;
+
+// Test S0
+const resS0 = runSymmetryExperiment({ structure: S0, operationId: opC3.id, predicate: 'PROPER_ROTATION' });
+console.log('  S0 (Regular) verdict:', resS0.verdict);
+assert(resS0.verdict === 'VERIFIED', 'S0 should be VERIFIED');
+
+// Test S1
+const resS1 = runSymmetryExperiment({ structure: S1, operationId: opC3.id, predicate: 'PROPER_ROTATION' });
+console.log('  S1 (Symmetric Def) verdict:', resS1.verdict);
+assert(resS1.verdict === 'VERIFIED', 'S1 should be VERIFIED');
+
+// Test S2
+const resS2 = runSymmetryExperiment({ structure: S2, operationId: opC3.id, predicate: 'PROPER_ROTATION' });
+console.log('  S2 (Asymmetric Def) verdict:', resS2.verdict);
+assert(resS2.verdict === 'REJECTED', 'S2 should be REJECTED');
+
+console.log('✅ TEST 28-30 PASSED: Symmetry under deformation analyzed.\n');

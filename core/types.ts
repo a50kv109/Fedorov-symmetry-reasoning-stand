@@ -73,11 +73,12 @@ export interface Evidence {
 }
 
 export interface ExperimentInput {
-  structureId: string;
+  structureId?: string;
   operationId: string;
   predicate?: VerificationPredicate;
   epsilon?: number;
   orthogonalityEpsilon?: number;
   determinantEpsilon?: number;
   operation?: Operation;
+  structure?: CanonicalStructure;
 }

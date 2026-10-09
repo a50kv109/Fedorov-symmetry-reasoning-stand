@@ -201,9 +201,9 @@ export function validateStructureIntegrity(structure: CanonicalStructure): Struc
  * - PROPER_ROTATION: PRESERVES_STRUCTURE and det(Q) = +1 (proper rotations only)
  */
 export function runSymmetryExperiment(input: ExperimentInput): Evidence {
-  const structure = CANONICAL_STRUCTURES[input.structureId];
+  const structure = input.structure || (input.structureId ? CANONICAL_STRUCTURES[input.structureId] : undefined);
   if (!structure) {
-    throw new Error(`Canonical structure '${input.structureId}' not found.`);
+    throw new Error(`Canonical structure '${input.structureId || 'undefined'}' not found or no structure provided.`);
   }
 
   const operation = input.operation || CANONICAL_OPERATIONS[input.operationId];
