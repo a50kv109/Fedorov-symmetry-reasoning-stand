@@ -1,13 +1,12 @@
 # FSS - Symmetry Discovery (M-6A.2)
 
-**STATUS: NOT IMPLEMENTED**
+**STATUS: PARTIALLY IMPLEMENTED (Deterministic Verification)**
 
 This document outlines the design for the Symmetry Discovery phase (M-6A.2).
 
 ## 1. Objectives
-- Automated discovery of symmetry transformations.
-- Deterministic candidate generation.
-- Validated verification against `core/` model.
+- Automated discovery of symmetry transformations (In progress).
+- Deterministic verification against `core/` model (Implemented).
 
 ## 2. Constraints & Principles
 - Affine dimensions (0-3) require specialized handling.

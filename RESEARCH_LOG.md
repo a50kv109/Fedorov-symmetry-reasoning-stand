@@ -6,7 +6,7 @@ A chronological log of research and development stages for FSS.
 | :--- | :--- | :--- | :--- |
 | M-6A.1 | Dimension Analysis | Barycenter, Normalization, Affine Dim (0-3) | `IMPLEMENTED` |
 | M-6A.1C | Stability & Determinism | Sorted eigenvalues, clustering, scale-independence | `IMPLEMENTED` |
-| M-6A.2 | Symmetry Discovery | Candidate generation, anchor transformations | `PROPOSED` |
+| M-6A.2 | Symmetry Discovery | Candidate generation, anchor transformations | `PARTIALLY_IMPLEMENTED` |
 
 ## Stage Details
 
