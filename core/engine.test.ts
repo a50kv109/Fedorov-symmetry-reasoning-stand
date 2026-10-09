@@ -9,7 +9,8 @@ import {
   OPERATION_IDENTITY,
   OPERATION_C3_120,
   OPERATION_NEGATIVE_45,
-  OPERATION_REFLECTION_XY
+  OPERATION_REFLECTION_XY,
+  CANONICAL_STRUCTURES
 } from './canonical';
 import { Operation, Matrix4x4 } from './types';
 
@@ -295,7 +296,6 @@ console.log('====================================================');
 console.log('RUNNING M-5C SEMANTIC TYPE PRESERVATION TESTS');
 console.log('====================================================\n');
 
-import { CANONICAL_STRUCTURES } from './canonical';
 import { CanonicalStructure } from './types';
 
 // -----------------------------------------------------------------------------
