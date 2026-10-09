@@ -856,15 +856,17 @@ console.log('✅ TEST 24 PASSED: Legacy API works.\n');
 // TEST 25 (EXP-02): Missing Structure
 // -----------------------------------------------------------------------------
 console.log('TEST 25 (EXP-02): Missing Structure (Error Expected)...');
+let caughtError = false;
 try {
   runSymmetryExperiment({
     operationId: OPERATION_C3_120.id,
     predicate: 'PROPER_ROTATION'
   } as any);
-  assert(false, 'Expected error when no structure/structureId provided');
 } catch (e) {
+  caughtError = true;
   console.log('  Caught expected error:', (e as Error).message);
 }
+assert(caughtError, 'Expected error when no structure/structureId provided');
 console.log('✅ TEST 25 PASSED: Missing structure causes error.\n');
 
 // -----------------------------------------------------------------------------
