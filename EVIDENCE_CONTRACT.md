@@ -2,26 +2,40 @@
 
 This defines the schema for evidence verification in the system (M-6A.1).
 
-## 1. Evidence Schema (`IMPLEMENTED`)
-
-Based on `core/dimension.ts` (`DimensionAnalysisResult`):
+## 1. Dimension Analysis Result (`DimensionAnalysisResult`)
+Based on `core/dimension.ts`:
 
 | Field | Type | Meaning |
 | :--- | :--- | :--- |
 | `vertexCount` | `number` | Total input vertices |
 | `uniqueGeometricCount` | `number` | Unique vertex positions |
 | `hasCoincidentVertices` | `boolean` | Are there coincident vertices? |
-| `barycenter` | `[number, number, number]` | Barycenter position |
-| `affineDimension` | `0 \| 1 \| 2 \| 3` | Computed dimension |
-| `conditionStatus` | `'WELL_CONDITIONED' \| ...` | Stability status |
-| `anchorFrame` | `AnchorFrame \| null` | Computed frame |
+| `clusters` | `GeometricCluster[]` | Clusters of coincident vertices |
+| `barycenter` | `Point3D` | Barycenter position |
+| `maxRadius` | `number` | Max distance from barycenter |
+| `rmsRadius` | `number` | RMS radius |
+| `eigenvalues` | `[number, number, number]` | Sorted eigenvalues |
+| `dimensionRatios` | `{ r2: number, r3: number }` | Eigenvalue ratios |
+| `affineDimension` | `AffineDimension` | Computed dimension (0-3) |
+| `conditionStatus` | `ConditionStatus` | Numerical stability status |
 | `diagnostic` | `string` | Diagnostic details |
+| `anchorFrame` | `AnchorFrame` | Computed frame or null |
 
-## 2. Status Semantics
+## 2. Evidence Contract (`Evidence`)
+Based on `core/types.ts`:
 
--   `WELL_CONDITIONED` / `ILL_CONDITIONED` / `DEGENERATE`: Status of numerical stability.
--   Early rejection logic: If `dim < 2` (0 or 1), `anchorFrame` is `null` (not applicable).
+| Field | Type | Meaning |
+| :--- | :--- | :--- |
+| `experiment_id` | `string` | ID of the experiment |
+| `structure_id` | `string` | ID of the structure |
+| `operation` | `object` | Transformation details |
+| `predicate` | `VerificationPredicate` | Verification type |
+| `epsilon` | `number` | Numerical tolerance |
+| `is_isometric` | `boolean` | Isometric verification result |
+| `orthogonality_delta` | `number` | Orthogonality check result |
+| `determinant` | `number` | Transformation determinant |
+| `verdict` | `ExperimentVerdict` | Result of verification |
 
-## 3. Future Requirements (M-6A.2)
-- Need to extend this structure to include symmetry-specific findings (e.g., `transformation`, `group_member`, `is_isometric`).
-- `verdict` and `rejection_reason` are currently `NOT_IMPLEMENTED`.
+## 3. Status Semantics
+- `ConditionStatus`: `WELL_CONDITIONED` \| `ILL_CONDITIONED` \| `DEGENERATE`.
+- `ExperimentVerdict`: `VERIFIED` \| `REJECTED`.
