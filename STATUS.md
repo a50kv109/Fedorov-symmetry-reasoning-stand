@@ -5,7 +5,7 @@
 ## Research Checkpoint & Audit Dossier
 - Complete documentation freeze and repository audit: [`docs/RESEARCH_CHECKPOINT.md`](docs/RESEARCH_CHECKPOINT.md).
 - Status: **Ready for independent external review (Grok)**.
-- Scope: 7 benchmark space groups (Nos. 1, 2, 4, 5, 9, 14, 19) in artifact, 6 in registry, exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
+- Scope: 8 benchmark space groups (Nos. 1, 2, 3, 4, 5, 9, 14, 19) in artifact, 7 in registry, exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
 
 ## Project Phases
 - **M-6A.1**: Dimensionality Analysis (`IMPLEMENTED`)
@@ -18,6 +18,7 @@
 - **KB-15**: Evidence-Backed Mathematical Property Reports (`IMPLEMENTED`)
 - **KB-16**: Centered Lattice (#5, C2) (`COMPLETED`)
 - **KB-17**: Centered Lattice & Glide (#9, Cc) (`COMPLETED`)
+- **Passport V1**: Mathematical Passport V1 (SG-002 baseline) (`IMPLEMENTED`)
 
 ## Component Status
 | Component | Status | Note |
@@ -26,5 +27,6 @@
 | `App` (UI/Server) | `BASELINE` | Minimal functional prototype |
 | `Discovery Engine` | `NOT_IMPLEMENTED` | Registry-free input enabled (input only, no automated discovery). |
 | `Evidence Generation`| `IMPLEMENTED` | Geometric Evidence (M-5F) + Crystallographic PropertyEvidence (KB-15) |
+| `Mathematical Passports`| `IMPLEMENTED` | Passport V1 schema, YAML config, deterministic verification, and visualization boundary contract |
 | `Reference Pipeline` | `IMPLEMENTED` | KB-10 contract + KB-11 extraction + KB-13A comparator + KB-14/15 properties & evidence |
 | `Experiments` | `COMPLETED` | EXP-02, EXP-03 finished |

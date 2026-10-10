@@ -2,7 +2,7 @@
 **Document:** `docs/RESEARCH_CHECKPOINT.md`  
 **Date:** 2026-10-10  
 **Status:** Pre-Audit Documentation Freeze (Prepared for Independent External Audit by Grok)  
-**Scope:** Controlled verification of 7 crystallographic space group benchmarks (Nos. 1, 2, 4, 5, 9, 14, 19), affine exact arithmetic, and evidence generation.
+**Scope:** Controlled verification of 8 crystallographic space group benchmarks (Nos. 1, 2, 3, 4, 5, 9, 14, 19), affine exact arithmetic, and evidence generation.
 
 ---
 
@@ -32,7 +32,7 @@ The current codebase implements a multi-layer pipeline separating external refer
 | :--- | :--- | :---: | :--- |
 | **Upstream Pinned Source** | `data/source/gemmi_symmetry_5cc1c23c.cpp` | `IMPLEMENTED` | Pinned C++ source of Gemmi `src/symmetry.cpp` (v0.7.5, commit `5cc1c23c...`, 564 space group table entries). Verified SHA-256: `fae1e4e6f297...`. |
 | **Reproducible Extractor** | `scripts/extract_gemmi_data.py` | `IMPLEMENTED` | Python 3 script extracting benchmark groups (1, 2, 14, 19) from `spacegroup_tables::main`, parsing Hall symbols, evaluating group closure mod 24, producing `data/crystallography/gemmi_benchmark_4.json`. |
-| **Reference Artifact** | `data/crystallography/gemmi_benchmark_4.json` | `IMPLEMENTED` | Versioned JSON artifact containing `manifest` (SHA-256: `734c9c1a...`) and 7 benchmark space group records. |
+| **Reference Artifact** | `data/crystallography/gemmi_benchmark_4.json` | `IMPLEMENTED` | Versioned JSON artifact containing `manifest` (SHA-256: `f1ee084b...`) and 8 benchmark space group records. |
 | **Exchange Contract & Schema** | `core/schema/crystallographic_exchange.ts` | `IMPLEMENTED` | Defines `SpaceGroupRecord`, `ExchangeManifest`, `ExactRational` (backed by `bigint` with `Number.isSafeInteger`), `validateStructuralRecord`, `validateMathematicalGroup`, and `validateProvenance`. |
 | **Reference Artifact Loader** | `core/reference_loader.ts` (`ReferenceArtifactLoader`) | `IMPLEMENTED` | Reads JSON, validates manifest SHA-256, verifies all records against KB-10 contract. Throws on missing files, tampered hashes, or invalid operations. |
 | **Origin Shift Analyzer** | `core/reference_loader.ts` (`OriginShiftAnalyzer`) | `IMPLEMENTED` | Evaluates coordinate transformations $x' = x - x_0$ via $w' = (w + (W - I)x_0) \pmod 1$ in exact rational arithmetic; proves group equivalence under candidate shifts. |
@@ -57,13 +57,13 @@ The current codebase implements a multi-layer pipeline separating external refer
 | Category | Count | Verification Source |
 | :--- | :---: | :--- |
 | **Total entries in source table** (`spacegroup_tables::main`) | **564** | `data/source/gemmi_symmetry_5cc1c23c.cpp` (full ITA settings table) |
-| **Entries extracted by extractor script** | **7** | `scripts/extract_gemmi_data.py` (filtered to Nos. 1, 2, 4, 5, 9, 14, 19) |
-| **Entries in local reference artifact** (`gemmi_benchmark_4.json`) | **7** | Verified on disk, SHA-256 records hash: `734c9c1a...` |
-| **Records passing structural validation** (`validateStructuralRecord`) | **6 / 6** | Tested in `core/schema/crystallographic_exchange.test.ts` |
-| **Records passing mathematical group validation** (`validateMathematicalGroup`) | **6 / 6** | Tested in `core/schema/crystallographic_exchange.test.ts` |
-| **Records compared with working catalog** (`CrystallographicComparator`) | **6 / 7** | 6 records compared (5 `MATCH`, 1 `SETTING_MISMATCH`); Group 9 not in registry. |
-| **Records in legacy working catalog** (`core/registry.ts`) | **6** | Nos. 1, 2, 4, 5, 14, 19 |
-| **Records with full Evidence reports generated** (`property_evidence.ts`) | **6 / 6** | Tested in `core/property_evidence.test.ts` (24 total evidence items) |
+| **Entries extracted by extractor script** | **8** | `scripts/extract_gemmi_data.py` (filtered to Nos. 1, 2, 3, 4, 5, 9, 14, 19) |
+| **Entries in local reference artifact** (`gemmi_benchmark_4.json`) | **8** | Verified on disk, SHA-256 records hash: `f1ee084b...` |
+| **Records passing structural validation** (`validateStructuralRecord`) | **7 / 7** | Tested in `core/schema/crystallographic_exchange.test.ts` |
+| **Records passing mathematical group validation** (`validateMathematicalGroup`) | **7 / 7** | Tested in `core/schema/crystallographic_exchange.test.ts` |
+| **Records compared with working catalog** (`CrystallographicComparator`) | **7 / 8** | 7 records compared (6 `MATCH`, 1 `SETTING_MISMATCH`); Group 9 not in registry. |
+| **Records in legacy working catalog** (`core/registry.ts`) | **7** | Nos. 1, 2, 3, 4, 5, 14, 19 |
+| **Records with full Evidence reports generated** (`property_evidence.ts`) | **7 / 7** | Tested in `core/property_evidence.test.ts` (28 total evidence items) |
 
 *Disclaimer*: Only the 7 benchmark groups have been extracted and evaluated. The remaining 560 entries in the source table have **not** been imported or verified.
 
@@ -72,8 +72,7 @@ The current codebase implements a multi-layer pipeline separating external refer
 | Group No. | HM Symbol | Hall Symbol | Setting ID | Crystal System | Centering | Operations | Upstream Source & Version | Provenance Status | Comparison Verdict vs `core/registry.ts` |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **1** | `P 1` | `P 1` | `P1` | triclinic | P | 1 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
-| **2** | `P -1` | `-P 1` | `P-1` | triclinic | P | 2 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
-| **4** | `P 1 21 1` | `P 2yb` | `P21` | monoclinic | P | 2 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
+| **3** | `P 1 2 1` | `P 2y` | `P2` | monoclinic | P | 2 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **14** | `P 1 21/c 1` | `-P 2ybc` | `P21/c` | monoclinic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **5** | `C 1 2 1` | `C 2y` | `C2` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **9** | `C 1 c 1` | `C -2yc` | `Cc` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`NOT_COMPARABLE`** (Absent from registry) |

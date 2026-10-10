@@ -32,7 +32,7 @@ EXPECTED_CPP_SHA256 = "fae1e4e6f297bbca5ff22126e5f99a54b60d8bcda0f003256558d2bb6
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "source")
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "crystallography", "gemmi_benchmark_4.json")
 
-TARGET_GROUPS = [1, 2, 4, 5, 9, 14, 19]
+TARGET_GROUPS = [1, 2, 3, 4, 5, 9, 14, 19]
 
 DEN = 24  # Gemmi denominator for fractional symmetry operations
 
@@ -357,7 +357,8 @@ def extract_benchmark_catalog():
         19: [e for e in all_entries if e["number"] == 19 and e["ccp4"] == 19][0],
         5: [e for e in all_entries if e["number"] == 5][0],
         9: [e for e in all_entries if e["number"] == 9][0],
-        4: [e for e in all_entries if e["number"] == 4][0]
+        4: [e for e in all_entries if e["number"] == 4][0],
+        3: [e for e in all_entries if e["number"] == 3][0]
     }
 
     records = []
@@ -369,7 +370,8 @@ def extract_benchmark_catalog():
         9: "monoclinic",
         14: "monoclinic",
         19: "orthorhombic",
-        4: "monoclinic"
+        4: "monoclinic",
+        3: "monoclinic"
     }
 
     setting_id_map = {
@@ -379,7 +381,8 @@ def extract_benchmark_catalog():
         9: "Cc",
         14: "P21/c",
         19: "P212121",
-        4: "P21"
+        4: "P21",
+        3: "P2"
     }
 
     for num in TARGET_GROUPS:

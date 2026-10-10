@@ -10,8 +10,8 @@
     "license": "MPL-2.0",
     "attribution": "International Tables for Crystallography (ITA)",
     "extractorVersion": "1.0.0",
-    "recordCount": 7,
-    "sha256Checksum": "734c9c1ad3276cf65c663e503230251c6fd904f1df797b21bcc3adbe0e10892f",
+    "recordCount": 8,
+    "sha256Checksum": "f1ee084b36c8fb658a62de117347a1a414b723709de8f60d0abc8e14ee4eec36",
     "isSourceVerified": true
   },
   "records": [
@@ -145,6 +145,94 @@
             }
           ],
           "triplet": "-x,-y,-z"
+        }
+      ],
+      "provenance": {
+        "sourceName": "Gemmi",
+        "sourceRepository": "https://github.com/project-gemmi/gemmi",
+        "sourceCommit": "5cc1c23c6007e0e6cbd69289c6f7c0bff50e943e",
+        "tablePath": "src/symmetry.cpp:spacegroup_tables::main",
+        "license": "MPL-2.0",
+        "attribution": "International Tables for Crystallography (ITA)",
+        "isVerified": true
+      }
+    },
+    {
+      "spaceGroupNumber": 3,
+      "settingId": "P2",
+      "hmSymbol": "P 1 2 1",
+      "hallSymbol": "P 2y",
+      "crystalSystem": "monoclinic",
+      "centering": "P",
+      "operationsCount": 2,
+      "operations": [
+        {
+          "W": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "w": [
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            }
+          ],
+          "triplet": "x,y,z"
+        },
+        {
+          "W": [
+            [
+              -1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              -1
+            ]
+          ],
+          "w": [
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            }
+          ],
+          "triplet": "-x,y,-z"
         }
       ],
       "provenance": {

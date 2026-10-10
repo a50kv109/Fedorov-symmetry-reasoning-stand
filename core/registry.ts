@@ -95,6 +95,25 @@ export class SymmetryCatalog {
       ]
     },
     {
+      groupNumber: 3,
+      settingId: "P2",
+      hmSymbol: "P 1 2 1",
+      hallSymbol: "P 2y",
+      provenance: "Gemmi/ITA 2024.1 (MPL-2.0)",
+      provenanceDetails: {
+        source: "Gemmi (https://github.com/project-gemmi/gemmi)",
+        commitOrVersion: "5cc1c23c6007e0e6cbd69289c6f7c0bff50e943e",
+        tablePath: "src/symmetry.cpp:spacegroup_tables::main",
+        license: "MPL-2.0",
+        attribution: "International Tables for Crystallography (ITA)",
+        normalizationMethod: "Exact rational extraction from Hall symbols"
+      },
+      operations: [
+        { W: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], w: [{ numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }] },
+        { W: [[-1, 0, 0], [0, 1, 0], [0, 0, -1]], w: [{ numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }] }
+      ]
+    },
+    {
       groupNumber: 4,
       settingId: "P21",
       hmSymbol: "P 1 21 1",

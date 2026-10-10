@@ -18,7 +18,9 @@ A chronological log of research and development stages for FSS.
 | KB-16 | Centered Lattice (#5, C2) | Added C2, implemented C-centering logic, verified 4 ops | `COMPLETED` |
 | KB-17 | Centered Lattice & Glide (#9, Cc) | Added Cc, implemented C-centering/glide, verified 4 ops | `COMPLETED` |
 | KB-18 | Centered Lattice (#4, P2₁) | Added P2₁, verified 2 operations | `COMPLETED` |
+| KB-19 | Monoclinic (#3, P2) | Added P2, verified 2 operations | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
+| Passport V1 | Mathematical Passport V1 | YAML schema, deterministic verification, and visualization boundary contract for SG-002 | `IMPLEMENTED` |
 
 ## Stage Details
 
@@ -167,6 +169,19 @@ A chronological log of research and development stages for FSS.
   - Updates to `STATUS.md` and `RESEARCH_LOG.md`.
 - **Integrity Guarantee**: Zero modifications to code, tests, or reference datasets.
 - **Status**: `COMPLETED`
+
+### Mathematical Passport V1
+- **Objective**: Implement Mathematical Passport V1 bridging YAML declarative metadata, canonical registry operations, deterministic exact verification, and visualization boundary contracts for SG-002 ($P\bar{1}$).
+- **Deliverables**:
+  - `core/schema/passport_schema.ts`: TypeScript schema for Mathematical Passports.
+  - `docs/math/SG-002-P-1.passport.yaml`: YAML passport configuration for SG-002.
+  - `core/visualization_contract.ts`: Typed boundary contract preserving `ExactRational` precision for UI experiments.
+  - `core/passport_verification.test.ts`: Integration test verifying claims against core methods.
+  - `docs/math/MATHEMATICAL_PASSPORT_V1.md`, `docs/math/SG-002-P-1.md`, `docs/architecture/MATHEMATICAL_PASSPORT_FLOW.md`.
+- **Validation**:
+  - `core/passport_verification.test.ts` passed successfully.
+  - Vite build compiled successfully.
+- **Status**: `IMPLEMENTED`
 
 ## Research Experiments
 
