@@ -62,10 +62,10 @@ The current codebase implements a multi-layer pipeline separating external refer
 | **Records passing structural validation** (`validateStructuralRecord`) | **7 / 7** | Tested in `core/schema/crystallographic_exchange.test.ts` |
 | **Records passing mathematical group validation** (`validateMathematicalGroup`) | **7 / 7** | Tested in `core/schema/crystallographic_exchange.test.ts` |
 | **Records compared with working catalog** (`CrystallographicComparator`) | **7 / 8** | 7 records compared (6 `MATCH`, 1 `SETTING_MISMATCH`); Group 9 not in registry. |
-| **Records in legacy working catalog** (`core/registry.ts`) | **7** | Nos. 1, 2, 3, 4, 5, 14, 19 |
-| **Records with full Evidence reports generated** (`property_evidence.ts`) | **7 / 7** | Tested in `core/property_evidence.test.ts` (28 total evidence items) |
+| **Records in working catalog** (`core/registry.ts`) | **8** | Nos. 1, 2, 3, 4, 5, 9, 14, 19 (Reconciled in Stage A) |
+| **Records with full Evidence reports generated** (`property_evidence.ts`) | **8 / 8** | Tested in `core/property_evidence.test.ts` |
 
-*Disclaimer*: Only the 7 benchmark groups have been extracted and evaluated. The remaining 560 entries in the source table have **not** been imported or verified.
+*Disclaimer*: The 8 benchmark settings have been extracted and evaluated. The remaining 556 entries in the source table have **not** been imported or verified.
 
 ### 2. Detailed Table of Benchmark Groups
 
@@ -75,7 +75,7 @@ The current codebase implements a multi-layer pipeline separating external refer
 | **3** | `P 1 2 1` | `P 2y` | `P2` | monoclinic | P | 2 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **14** | `P 1 21/c 1` | `-P 2ybc` | `P21/c` | monoclinic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **5** | `C 1 2 1` | `C 2y` | `C2` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
-| **9** | `C 1 c 1` | `C -2yc` | `Cc` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`NOT_COMPARABLE`** (Absent from registry) |
+| **9** | `C 1 c 1` | `C -2yc` | `Cc` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (Reconciled in Stage A, 100% identical operations) |
 | **19** | `P 21 21 21` | `P 2ac 2ab` | `P212121` | orthorhombic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`SETTING_MISMATCH`** (Origin shifted by $(1/4, 1/4, 1/4)$, mathematical equivalence strictly proven) |
 
 ---

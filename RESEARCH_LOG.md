@@ -21,6 +21,7 @@ A chronological log of research and development stages for FSS.
 | KB-19 | Monoclinic (#3, P2) | Added P2, verified 2 operations | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
 | Passport V1 | Mathematical Passport V1 | YAML schema, deterministic verification, and visualization boundary contract for SG-002 | `PARTIAL / BASELINE VALIDATED FOR SG-002` |
+| Stage A | Registry Reconciliation & Validation | Reconciled Group No. 9 (Cc), implemented exact finite-set validation (identity, closure mod 1, inverses mod 1 with explicit failure reports, and C2 vs Cc distinction) | `COMPLETED` |
 
 ## Stage Details
 
@@ -185,6 +186,19 @@ A chronological log of research and development stages for FSS.
   - `npm run lint` (`tsc --noEmit`): **PASS** (Exit code 0).
   - `npm run build` (`vite build`): **PASS** (Exit code 0).
 - **Status**: `PARTIAL / BASELINE VALIDATED FOR SG-002`
+
+### Stage A — Registry Reconciliation and Exact Group Validation
+- **Objective**: Reconcile Group No. 9 (`Cc`) into working registry (`core/registry.ts`) from benchmark artifact `gemmi_benchmark_4.json`, preserving distinct provenance, and implement exact finite-set validation in `core/registry.test.ts`.
+- **Implementation & Deliverables**:
+  - Added Group No. 9 (`Cc`, monoclinic, C-centering, 4 operations) to `core/registry.ts` with explicit provenance pointing to Gemmi commit `5cc1c23c6007e0e6cbd69289c6f7c0bff50e943e`.
+  - Updated `core/registry.test.ts` to test completeness for all registered groups (including `Cc`, `P2`, `P21`).
+  - Implemented exact finite-set validation: identity presence, closure under composition modulo $\mathbb{Z}^3$ (`mod1()`), existence of inverse for every operation modulo $\mathbb{Z}^3$ with explicit failure reporting identifying setting and operation pair, exact rational arithmetic, and an explicit assertion distinguishing Group No. 5 (`C2`) from Group No. 9 (`Cc`).
+- **Command Results**:
+  - `npx tsx core/registry.test.ts`: **PASS** (Exit code 0).
+  - `npx tsx core/passport_verification.test.ts`: **PASS** (Exit code 0).
+  - `npm run lint` (`tsc --noEmit`): **PASS** (Exit code 0).
+  - `npm run build` (`vite build`): **PASS** (Exit code 0).
+- **Status**: `COMPLETED`
 
 ## Research Experiments
 

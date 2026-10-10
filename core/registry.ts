@@ -152,6 +152,27 @@ export class SymmetryCatalog {
         { W: [[-1, 0, 0], [0, 1, 0], [0, 0, -1]], w: [{ numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }] },
         { W: [[-1, 0, 0], [0, 1, 0], [0, 0, -1]], w: [{ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 2 }, { numerator: 0, denominator: 1 }] }
       ]
+    },
+    {
+      groupNumber: 9,
+      settingId: "Cc",
+      hmSymbol: "C 1 c 1",
+      hallSymbol: "C -2yc",
+      provenance: "Gemmi/ITA 2024.1 (MPL-2.0)",
+      provenanceDetails: {
+        source: "Gemmi (https://github.com/project-gemmi/gemmi)",
+        commitOrVersion: "5cc1c23c6007e0e6cbd69289c6f7c0bff50e943e",
+        tablePath: "src/symmetry.cpp:spacegroup_tables::main",
+        license: "MPL-2.0",
+        attribution: "International Tables for Crystallography (ITA)",
+        normalizationMethod: "Exact rational extraction from Hall symbols"
+      },
+      operations: [
+        { W: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], w: [{ numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }] },
+        { W: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], w: [{ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 2 }, { numerator: 0, denominator: 1 }] },
+        { W: [[1, 0, 0], [0, -1, 0], [0, 0, 1]], w: [{ numerator: 0, denominator: 1 }, { numerator: 0, denominator: 1 }, { numerator: 1, denominator: 2 }] },
+        { W: [[1, 0, 0], [0, -1, 0], [0, 0, 1]], w: [{ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 2 }, { numerator: 1, denominator: 2 }] }
+      ]
     }
   ];
 

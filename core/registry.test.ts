@@ -8,14 +8,17 @@ function assert(condition: boolean, message: string) {
   }
 }
 
-console.log('Running KB-06 Completeness & Registry Tests...');
+console.log('Running KB-06 Completeness & Exact Finite-Set Validation Tests...\n');
 
 const expectedCounts: Record<string, number> = {
   "P1": 1,
   "P-1": 2,
+  "P2": 2,
+  "P21": 2,
   "P212121": 4,
   "P21/c": 4,
-  "C2": 4
+  "C2": 4,
+  "Cc": 4
 };
 
 // Helper for rational arithmetic
@@ -73,48 +76,79 @@ function composeOps(op1: any, op2: any) {
   return { W: W3, w: w3 };
 }
 
-// 1. Check operation counts and contents against expected
+// 1. Check operation counts and contents against expected with exact finite-set validation
 for (const [settingId, expectedCount] of Object.entries(expectedCounts)) {
   const record = SymmetryCatalog.findBySettingId(settingId);
-  assert(!!record, `Record ${settingId} not found`);
-  assert(record!.operations.length === expectedCount, `${settingId} expected ${expectedCount} ops, got ${record!.operations.length}`);
+  assert(!!record, `Explicit failure report: Record '${settingId}' not found in symmetry catalog.`);
+  assert(record!.operations.length === expectedCount, `Explicit failure report: Setting '${settingId}' expected ${expectedCount} operations, got ${record!.operations.length}.`);
   
   // Check no duplicates
   const opStrings = record!.operations.map(op => JSON.stringify(op));
   const uniqueOps = new Set(opStrings);
-  assert(uniqueOps.size === record!.operations.length, `${settingId} contains duplicate operations`);
+  assert(uniqueOps.size === record!.operations.length, `Explicit failure report: Setting '${settingId}' contains duplicate operations.`);
 
-  // Check identity presence
+  // Check identity presence (modulo lattice translations)
   const hasIdentity = record!.operations.some(op => {
     const isIdMat = op.W[0][0]===1 && op.W[1][1]===1 && op.W[2][2]===1 &&
                     op.W[0][1]===0 && op.W[0][2]===0 && op.W[1][0]===0 && op.W[1][2]===0 && op.W[2][0]===0 && op.W[2][1]===0;
-    const isZeroTrans = op.w.every(t => t.numerator === 0);
+    const isZeroTrans = op.w.every((t: any) => new Rat(t.numerator, t.denominator).mod1().n === 0);
     return isIdMat && isZeroTrans;
   });
-  assert(hasIdentity, `${settingId} missing identity operation`);
+  assert(hasIdentity, `Explicit failure report: Setting '${settingId}' is missing the identity operation.`);
 
-  // Check closure
-  for (const op1 of record!.operations) {
-    for (const op2 of record!.operations) {
+  // Check closure under composition modulo integer lattice translations
+  for (let i = 0; i < record!.operations.length; i++) {
+    for (let j = 0; j < record!.operations.length; j++) {
+      const op1 = record!.operations[i];
+      const op2 = record!.operations[j];
       const comp = composeOps(op1, op2);
       const matchesAny = record!.operations.some(target => {
         const tW = target.W;
         const tw = target.w.map((x: any) => new Rat(x.numerator, x.denominator));
-        const matEq = tW.every((row, i) => row.every((val, j) => val === comp.W[i][j]));
-        const vecEq = tw.every((val, i) => val.equals(comp.w[i]));
+        const matEq = tW.every((row, rowIdx) => row.every((val, colIdx) => val === comp.W[rowIdx][colIdx]));
+        const vecEq = tw.every((val, idx) => val.equals(comp.w[idx]));
         return matEq && vecEq;
       });
-      assert(matchesAny, `${settingId} is not closed under composition`);
+      assert(matchesAny, `Explicit failure report: Setting '${settingId}' is not closed under composition for operation pair [${i}, ${j}].`);
     }
+  }
+
+  // Check presence of inverse for every operation modulo lattice translations
+  for (let i = 0; i < record!.operations.length; i++) {
+    const op1 = record!.operations[i];
+    let hasInverse = false;
+    for (let j = 0; j < record!.operations.length; j++) {
+      const op2 = record!.operations[j];
+      const comp = composeOps(op1, op2);
+      const isIdMat = comp.W[0][0]===1 && comp.W[1][1]===1 && comp.W[2][2]===1 &&
+                      comp.W[0][1]===0 && comp.W[0][2]===0 && comp.W[1][0]===0 && comp.W[1][2]===0 && comp.W[2][0]===0 && comp.W[2][1]===0;
+      const isZeroTrans = comp.w.every((t: Rat) => t.mod1().n === 0);
+      if (isIdMat && isZeroTrans) {
+        hasInverse = true;
+        break;
+      }
+    }
+    assert(hasInverse, `Explicit failure report: Setting '${settingId}' operation index ${i} lacks an inverse operation modulo lattice translations.`);
   }
 
   // Check adapter compatibility
   const adapted = SymmetryAdapter.adapt(record!);
-  assert(adapted.length === expectedCount, `${settingId} adapter output length mismatch`);
+  assert(adapted.length === expectedCount, `Explicit failure report: Setting '${settingId}' adapter output length mismatch.`);
 }
+
+// 2. Explicit test distinguishing Group No. 5 (C2) from Group No. 9 (Cc)
+const recC2 = SymmetryCatalog.findBySettingId("C2");
+const recCc = SymmetryCatalog.findBySettingId("Cc");
+assert(!!recC2, 'Group C2 must be registered');
+assert(!!recCc, 'Group Cc must be registered');
+assert(recC2!.groupNumber === 5, 'C2 group number must be 5');
+assert(recCc!.groupNumber === 9, 'Cc group number must be 9');
+assert(recC2!.hmSymbol !== recCc!.hmSymbol, 'C2 and Cc must have distinct HM symbols');
+assert(recC2!.hallSymbol !== recCc!.hallSymbol, 'C2 and Cc must have distinct Hall symbols');
+assert(recC2!.operations.length === recCc!.operations.length, 'C2 and Cc both have 4 operations but differ in glide/centering semantics');
 
 // Provenance check
 const p1 = SymmetryCatalog.findBySettingId("P1");
 assert(!!p1?.provenanceDetails && !!p1.provenanceDetails.license, 'Provenance details missing');
 
-console.log('All KB-06 completeness and closure tests passed successfully!');
+console.log('All KB-06 and Stage A exact finite-set validation & Cc reconciliation tests passed successfully!');

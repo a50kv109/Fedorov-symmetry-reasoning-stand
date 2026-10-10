@@ -1,11 +1,11 @@
 # FSS - Status
 
-**Status:** Research Prototype (`PARTIAL / BASELINE VALIDATED FOR SG-002`)
+**Status:** Research Prototype (`STAGE A RECONCILED & EXACT FINITE-SET VALIDATED`)
 
 ## Research Checkpoint & Audit Dossier
 - Complete documentation freeze and repository audit: [`docs/RESEARCH_CHECKPOINT.md`](docs/RESEARCH_CHECKPOINT.md).
 - Status: **Ready for independent external review (Grok)**.
-- Scope: 8 benchmark space groups (Nos. 1, 2, 3, 4, 5, 9, 14, 19) in artifact, 7 in registry, exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
+- Scope: Benchmark space groups in artifact, registered settings (including Group No. 9 `Cc`), exact rational affine arithmetic, origin shift proofs, and exact finite-set closure/inverse validation modulo lattice translations.
 
 ## Project Phases
 - **M-6A.1**: Dimensionality Analysis (`IMPLEMENTED`)
@@ -17,8 +17,8 @@
 - **KB-14**: Derived Group Properties from Exact Operations (`IMPLEMENTED`)
 - **KB-15**: Evidence-Backed Mathematical Property Reports (`IMPLEMENTED`)
 - **KB-16**: Centered Lattice (#5, C2) (`COMPLETED`)
-- **KB-17**: Centered Lattice & Glide (#9, Cc) (`COMPLETED`)
-- **Passport V1**: Mathematical Passport V1 (SG-002 baseline validated with explicit center and independent point transform checks) (`PARTIAL / BASELINE VALIDATED`)
+- **KB-17 / Stage A**: Centered Lattice & Glide (#9, Cc reconciled & exact finite-set validation executed) (`COMPLETED`)
+- **Passport V1**: Mathematical Passport V1 (SG-002 baseline validated) (`PARTIAL / BASELINE VALIDATED`)
 
 ## Component Status
 | Component | Status | Note |
@@ -27,6 +27,7 @@
 | `App` (UI/Server) | `BASELINE` | Minimal functional prototype |
 | `Discovery Engine` | `NOT_IMPLEMENTED` | Registry-free input enabled (input only, no automated discovery). |
 | `Evidence Generation`| `IMPLEMENTED` | Geometric Evidence (M-5F) + Crystallographic PropertyEvidence (KB-15) |
-| `Mathematical Passports`| `PARTIAL / BASELINE VALIDATED` | Passport V1 schema, YAML config, SG-002 verified test slice (with explicit center and independent transform checks), and visualization boundary DTO. Runtime YAML loader and automated contract dispatch are deferred. |
+| `Mathematical Passports`| `PARTIAL / BASELINE VALIDATED` | Passport V1 schema, YAML config, SG-002 verified test slice, and visualization boundary DTO. Runtime YAML loader and automated contract dispatch are deferred. |
+| `Registry & Validation` | `IMPLEMENTED` | Group No. 9 (`Cc`) reconciled; exact finite-set validation (identity, closure mod 1, inverses mod 1 with explicit failure reports, and C2 vs Cc distinction) executed and passed. |
 | `Reference Pipeline` | `IMPLEMENTED` | KB-10 contract + KB-11 extraction + KB-13A comparator + KB-14/15 properties & evidence |
 | `Experiments` | `COMPLETED` | EXP-02, EXP-03 finished |
