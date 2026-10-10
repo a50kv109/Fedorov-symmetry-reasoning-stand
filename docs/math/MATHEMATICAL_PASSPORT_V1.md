@@ -39,11 +39,10 @@ The validated baseline test (`core/passport_verification.test.ts`) explicitly ch
 
 ## 4. Verification Flow and Evidence
 
-The pipeline connecting a claim to runtime evidence:
-
-$$\text{Registry} \longrightarrow \text{SG-002 Test} \longrightarrow \text{Exact Math Checks} \longrightarrow \text{Computed Results} \longrightarrow \text{Visualization DTO}$$
-
-- **Result (`VerificationResult`):** Generated dynamically at runtime with status (`VERIFIED`, `REJECTED`, `CONFLICT`, `PENDING`, `STALE`).
+- SG-002 is verified by a specialized test (`core/passport_verification.test.ts`).
+- Results of mathematical comparisons are expressed via computed boolean values `fixedPointOk` and `pointTransformOk`.
+- `satisfied` is computed from these results.
+- A universal mechanism for generating and managing `VerificationResult` with dynamic statuses (`VERIFIED`, `REJECTED`, `CONFLICT`, `PENDING`, `STALE`) is not implemented and not claimed.
 
 ---
 
@@ -53,7 +52,7 @@ $$\text{Registry} \longrightarrow \text{SG-002 Test} \longrightarrow \text{Exact
 |---|---|
 | `npx tsx core/passport_verification.test.ts` | **PASS** (Exit code 0) |
 | `npm run lint` (`tsc --noEmit`) | **PASS** (Exit code 0) |
-| `npm run build` (`vite build`)| **PASS** (Exit code 0) |
+| `npm run build` (`vite build`) | **PASS** (Exit code 0) |
 
 ---
 

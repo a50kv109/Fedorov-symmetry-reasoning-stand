@@ -26,4 +26,7 @@ $$\text{YAML Passport} \longrightarrow \text{Runtime YAML Loader} \longrightarro
 3. **Deterministic Verification:**
    - Executable methods in `core/group_properties.ts` and test assertions in `core/passport_verification.test.ts` evaluate SG-002 operations using exact rational arithmetic (`ExactRational`), including explicit coordinate checks for the inversion center and independent verification of transformed test points.
 4. **Visualization Boundary Contract:**
-   - `core/visualization_contract.ts` packages exact vectors (`ExactVector3` using `ExactRational`) and invariant flags into immutable payloads (`SG002VisualizationPayload`). Exact precision is preserved up to the boundary.
+   - `createSG002VisualizationPayload()` creates a standard DTO object from values passed by the caller.
+   - The function itself does not compute geometric transformations or verify mathematical invariants.
+   - Precision of `ExactRational` is preserved when passing corresponding objects, but object immutability is not guaranteed.
+   - Projecting coordinates onto the screen remains the responsibility of the UI.

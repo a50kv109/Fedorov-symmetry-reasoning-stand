@@ -20,7 +20,7 @@ A chronological log of research and development stages for FSS.
 | KB-18 | Centered Lattice (#4, P2₁) | Added P2₁, verified 2 operations | `COMPLETED` |
 | KB-19 | Monoclinic (#3, P2) | Added P2, verified 2 operations | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
-| Passport V1 | Mathematical Passport V1 | YAML schema, deterministic verification, and visualization boundary contract for SG-002 | `IMPLEMENTED` |
+| Passport V1 | Mathematical Passport V1 | YAML schema, deterministic verification, and visualization boundary contract for SG-002 | `PARTIAL / BASELINE VALIDATED FOR SG-002` |
 
 ## Stage Details
 
