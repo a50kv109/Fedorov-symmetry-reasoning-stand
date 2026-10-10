@@ -395,13 +395,19 @@ def extract_benchmark_catalog():
                 "triplet": triplet
             })
 
+        # Determine centering from Hall symbol
+        hall_for_centering = entry["hall"].strip()
+        if hall_for_centering.startswith('-'):
+            hall_for_centering = hall_for_centering[1:].strip()
+        centering = hall_for_centering[0]
+
         record = {
             "spaceGroupNumber": num,
             "settingId": setting_id_map[num],
             "hmSymbol": entry["hm"],
             "hallSymbol": entry["hall"],
             "crystalSystem": system_map[num],
-            "centering": "P",
+            "centering": centering,
             "operationsCount": len(formatted_ops),
             "operations": formatted_ops,
             "provenance": {
