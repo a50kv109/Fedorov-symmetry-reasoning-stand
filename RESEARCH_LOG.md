@@ -98,18 +98,18 @@ A chronological log of research and development stages for FSS.
 - **Catalog Immutability**: `core/registry.ts` remains completely unchanged (unmodified legacy baseline).
 
 ### FSS-KB-14 — Derived Group Properties from Exact Operations
-- **Objective**: Implement a verified analytical layer deriving mathematical group properties from exact operations without relying on premature modulo 1 reduction or unverified classification labels.
+- **Objective**: Implement a verified analytical layer deriving mathematical group properties from exact operations based on defined rational arithmetic, avoiding premature modulo 1 reduction where possible.
 - **Components Implemented**:
   - `core/group_properties.ts`:
-    1. `AffineOperationAlgebra`: Exact 3x3 integer matrix operations ($\det$, $\operatorname{tr}$, algebraic order with crystallographic bound $\{1,2,3,4,6\}$), matrix-vector multiplication with `ExactRational`, and unreduced affine composition $(W_1, w_1) \circ (W_2, w_2) = (W_1 W_2, W_1 w_2 + w_1)$.
+    1. `AffineOperationAlgebra`: Exact 3x3 integer matrix operations ($\det$, $\operatorname{tr}$, crystallographic bound $\{1,2,3,4,6\}$), matrix-vector multiplication with `ExactRational`, and unreduced affine composition $(W_1, w_1) \circ (W_2, w_2) = (W_1 W_2, W_1 w_2 + w_1)$.
     2. `CrystallographicGroupProperties`:
-       - *Linear Parts Analysis*: Extracts distinct $W$, orders, determinants, traces, and geometric classes (`IDENTITY`, `INVERSION`, `PROPER_ROTATION`, `REFLECTION`, `INVERSION_ROTATION`).
-       - *Centrosymmetry & Inversion Centers*: Identifies $W = -I_3$ and computes exact midpoint inversion center $x_0 = \frac{1}{2} w \pmod 1$ in `ExactRational`.
-       - *Operation Powers & Unreduced Translations*: Iterates $(W, w)^k$ up to $k = \operatorname{ord}(W)$ without modular reduction, preserving $t_{\text{unreduced}} = \sum_{j=0}^{k-1} W^j w$ to accurately compute intrinsic translation $\tau = \frac{1}{k} t_{\text{unreduced}}$.
-       - *Traceability & Disclaimers*: Distinguishes statuses (`VERIFIED`, `INCOMPLETE`, `NOT_APPLICABLE`), records exact limitations, and prevents false classification of off-origin pure rotations.
-  - `core/group_properties.test.ts`: Complete test suite with 10 comprehensive test cases covering crystallographic orders, inversion centers, exact power iteration, unreduced vs mod 1 translations, determinism across 100 runs, incomplete data handling, off-origin rotation discrimination, artifact/catalog immutability, and permutation invariance.
-- **Key Scientific Finding**:
-  - Premature modulo 1 reduction on intermediate powers erases intrinsic translations ($t_{\text{unreduced}} \pmod 1 = 0$ for screw axes and glides), falsely destroying their screw/glide character. Preserving unreduced sums $t_{\text{unreduced}}$ enables exact, origin-invariant recovery of $\tau$.
+       - *Linear Parts Analysis*: Extracts $W$, orders, determinants, traces, and geometric classes.
+       - *Inversion Centers*: Computes midpoint $x_0 = \frac{1}{2} w \pmod 1$ in `ExactRational`.
+       - *Operation Powers & Translations*: Computes $(W, w)^k$ up to $k = \operatorname{ord}(W)$, preserving $t_{\text{unreduced}} = \sum_{j=0}^{k-1} W^j w$ to support computation of intrinsic translation $\tau = \frac{1}{k} t_{\text{unreduced}}$.
+       - *Traceability*: Records statuses (`VERIFIED`, `INCOMPLETE`, `NOT_APPLICABLE`), tracks limitations.
+  - `core/group_properties.test.ts`: Test suite covering crystallographic orders, inversion centers, exact power iteration, translation comparisons, and determinism.
+- **Key Scientific Observation**:
+  - Preserving unreduced sums $t_{\text{unreduced}}$ avoids loss of intrinsic translation data $\tau$ that can occur during intermediate modulo 1 reduction in screw axes and glides.
 - **Status**: `IMPLEMENTED`
 
 ### FSS-KB-15 — Evidence-Backed Mathematical Property Reports

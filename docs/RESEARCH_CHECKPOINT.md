@@ -139,7 +139,7 @@ The current codebase implements a multi-layer pipeline separating external refer
    - *Evidence*: `OriginShiftAnalyzer` proves that the reference Gemmi operations map identically to `core/registry.ts` ONLY under the specific candidate shift $x_0 = (1/4, 1/4, 1/4)$.
    - *Limitation*: The system implements a single-candidate check (`candidateShift = (1/4, 1/4, 1/4)`), not a general $GL(3, \mathbb{Z})$ affine normalizer or search algorithm. Documented equivalence applies only to this pair in this setting.
 5. **Group 19 Discrepancy Resolution**:
-   - *Status*: **Resolved and mathematically proven**.
+   - *Status*: **Resolved and verified for the specific benchmark pair**.
    - *Evidence*: `OriginShiftAnalyzer.verifyEquivalenceUnderShift` proves that the reference Gemmi operations (ITA Vol. A standard) map 100% identically to `core/registry.ts` under origin shift $x_0 = (1/4, 1/4, 1/4)$. Furthermore, intrinsic screw translations $\tau = (1/2, 0, 0), (0, 1/2, 0), (0, 0, 1/2)$ are invariant between both presentations.
 6. **Centered Lattices (A, B, C, I, F, R)**:
    - *Status*: **OPEN / UNRESOLVED**.
@@ -201,7 +201,7 @@ PROVENANCE RECORD (Source Authenticity)
 | **Upstream Source Extract** | `data/source/gemmi_symmetry_5cc1c23c.cpp` | **Present** |
 | **Generated JSON Artifact** | `data/crystallography/gemmi_benchmark_4.json` | **Present** |
 | **Cryptographic Checksums** | Documented in `manifest` and verified in tests | **Present** |
-| **Test Suites** | `core/*.test.ts`, `core/schema/*.test.ts` | **Present (11 suites, 100% pass)** |
+| **Test Suites** | `core/*.test.ts`, `core/schema/*.test.ts` | **Present (11 suites, verified in local development)** |
 | **License & Attribution** | MPL-2.0, International Tables for Crystallography (ITA) noted in manifests | **Present** |
 | **Execution Scripts** | `package.json` (`npm run lint`, `npm run build`, `npm run dev`) | **Present** |
 | **Architecture Documentation**| `ARCHITECTURE.md`, `EVIDENCE_CONTRACT.md`, `RESEARCH_LOG.md`, `STATUS.md` | **Present** |
