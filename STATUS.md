@@ -17,6 +17,7 @@
 - **KB-14**: Derived Group Properties from Exact Operations (`IMPLEMENTED`)
 - **KB-15**: Evidence-Backed Mathematical Property Reports (`IMPLEMENTED`)
 - **KB-16**: Centered Lattice (#5, C2) (`COMPLETED`)
+- **KB-17**: Centered Lattice & Glide (#9, Cc) (`COMPLETED`)
 
 ## Component Status
 | Component | Status | Note |

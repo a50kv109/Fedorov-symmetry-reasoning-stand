@@ -16,6 +16,7 @@ A chronological log of research and development stages for FSS.
 | KB-15 | Evidence-Backed Reports | Multi-level verification, structured PropertyEvidence, traceability | `IMPLEMENTED` |
 | KB-15A | Audit Findings Reconciliation | Documentation update based on Grok audit ZIP analysis | `COMPLETED` |
 | KB-16 | Centered Lattice (#5, C2) | Added C2, implemented C-centering logic, verified 4 ops | `COMPLETED` |
+| KB-17 | Centered Lattice & Glide (#9, Cc) | Added Cc, implemented C-centering/glide, verified 4 ops | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
 
 ## Stage Details
@@ -138,6 +139,24 @@ A chronological log of research and development stages for FSS.
   1. *Origin Choice Equivalence*: Clarified that equivalence for Group 19 is proven for the specific pair (Gemmi vs Registry) under shift $p=(1/4, 1/4, 1/4)$. No universal solver for arbitrary basis/origin choices exists.
   2. *Provenance*: Documented that manifest (`5cc1c23c...`) and registry (`6ea553a`) use different versions.
   3. *Test Status*: Clarified that test `PASS` status refers to the local development environment (where `node_modules` is present); execution within a bare ZIP audit environment is constrained.
+- **Status**: `COMPLETED`
+
+### FSS-KB-16 — Centered Lattice (#5, C2)
+- **Objective**: Extend benchmark with Space Group No. 5 (monoclinic, standard unique-axis-b, C2).
+- **Implementation**:
+  - Implemented C-centering logic in extractor and verified 4 operations.
+- **Status**: `COMPLETED`
+
+### FSS-KB-17 — Add Space Group No. 9 (Cc)
+- **Objective**: Extend benchmark with Space Group No. 9 (monoclinic, standard unique-axis-b, Cc).
+- **Implementation**:
+  - Updated `scripts/extract_gemmi_data.py` to support `Cc` via Hall symbol `C -2yc`.
+  - Added group 9 to `TARGET_GROUPS`, `system_map`, `setting_id_map`.
+  - Regenerated `data/crystallography/gemmi_benchmark_4.json`.
+- **Validation**:
+  - Verified 4 operations derived from source `5cc1c23c...`.
+  - Group 9 exhibits `centering: C`.
+  - Determinism verified: 100% bit-identical artifact across independent runs.
 - **Status**: `COMPLETED`
 
 ### FSS-CHECKPOINT — Pre-Audit Documentation Freeze (KB-15 Checkpoint)

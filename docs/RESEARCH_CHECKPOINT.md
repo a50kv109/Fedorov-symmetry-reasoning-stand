@@ -57,13 +57,13 @@ The current codebase implements a multi-layer pipeline separating external refer
 | Category | Count | Verification Source |
 | :--- | :---: | :--- |
 | **Total entries in source table** (`spacegroup_tables::main`) | **564** | `data/source/gemmi_symmetry_5cc1c23c.cpp` (full ITA settings table) |
-| **Entries extracted by extractor script** | **5** | `scripts/extract_gemmi_data.py` (filtered to Nos. 1, 2, 5, 14, 19) |
-| **Entries in local reference artifact** (`gemmi_benchmark_4.json`) | **5** | Verified on disk, SHA-256 records hash: `478cb1c0...` |
-| **Records passing structural validation** (`validateStructuralRecord`) | **5 / 5** | Tested in `core/schema/crystallographic_exchange.test.ts` |
-| **Records passing mathematical group validation** (`validateMathematicalGroup`) | **5 / 5** | Tested in `core/schema/crystallographic_exchange.test.ts` |
-| **Records compared with working catalog** (`CrystallographicComparator`) | **5 / 5** | Tested in `core/reference_loader.test.ts` (4 `MATCH`, 1 `SETTING_MISMATCH`) |
-| **Records in legacy working catalog** (`core/registry.ts`) | **5** | Nos. 1, 2, 5, 14, 19 (legacy commit metadata `6ea553a`) |
-| **Records with full Evidence reports generated** (`property_evidence.ts`) | **5 / 5** | Tested in `core/property_evidence.test.ts` (19 total evidence items) |
+| **Entries extracted by extractor script** | **6** | `scripts/extract_gemmi_data.py` (filtered to Nos. 1, 2, 5, 9, 14, 19) |
+| **Entries in local reference artifact** (`gemmi_benchmark_4.json`) | **6** | Verified on disk, SHA-256 records hash: `ba7f4517...` |
+| **Records passing structural validation** (`validateStructuralRecord`) | **6 / 6** | Tested in `core/schema/crystallographic_exchange.test.ts` |
+| **Records passing mathematical group validation** (`validateMathematicalGroup`) | **6 / 6** | Tested in `core/schema/crystallographic_exchange.test.ts` |
+| **Records compared with working catalog** (`CrystallographicComparator`) | **6 / 6** | Tested in `core/reference_loader.test.ts` (4 `MATCH`, 2 `SETTING_MISMATCH`) |
+| **Records in legacy working catalog** (`core/registry.ts`) | **5** | Nos. 1, 2, 5, 14, 19 |
+| **Records with full Evidence reports generated** (`property_evidence.ts`) | **6 / 6** | Tested in `core/property_evidence.test.ts` (24 total evidence items) |
 
 *Disclaimer*: Only the 5 benchmark groups have been extracted and evaluated. The remaining 560 entries in the source table have **not** been imported or verified.
 
@@ -75,6 +75,7 @@ The current codebase implements a multi-layer pipeline separating external refer
 | **2** | `P -1` | `-P 1` | `P-1` | triclinic | P | 2 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **14** | `P 1 21/c 1` | `-P 2ybc` | `P21/c` | monoclinic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **5** | `C 1 2 1` | `C 2y` | `C2` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
+| **9** | `C 1 c 1` | `C -2yc` | `Cc` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`SETTING_MISMATCH`** (Origin shifted) |
 | **19** | `P 21 21 21` | `P 2ac 2ab` | `P212121` | orthorhombic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`SETTING_MISMATCH`** (Origin shifted by $(1/4, 1/4, 1/4)$, mathematical equivalence strictly proven) |
 
 ---
