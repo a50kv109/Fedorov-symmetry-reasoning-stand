@@ -17,6 +17,7 @@ A chronological log of research and development stages for FSS.
 | KB-15A | Audit Findings Reconciliation | Documentation update based on Grok audit ZIP analysis | `COMPLETED` |
 | KB-16 | Centered Lattice (#5, C2) | Added C2, implemented C-centering logic, verified 4 ops | `COMPLETED` |
 | KB-17 | Centered Lattice & Glide (#9, Cc) | Added Cc, implemented C-centering/glide, verified 4 ops | `COMPLETED` |
+| KB-18 | Centered Lattice (#4, P2₁) | Added P2₁, verified 2 operations | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
 
 ## Stage Details

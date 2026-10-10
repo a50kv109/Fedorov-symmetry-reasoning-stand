@@ -5,7 +5,7 @@
 ## Research Checkpoint & Audit Dossier
 - Complete documentation freeze and repository audit: [`docs/RESEARCH_CHECKPOINT.md`](docs/RESEARCH_CHECKPOINT.md).
 - Status: **Ready for independent external review (Grok)**.
-- Scope: 6 benchmark space groups (Nos. 1, 2, 5, 9, 14, 19) in artifact, 5 in registry, exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
+- Scope: 7 benchmark space groups (Nos. 1, 2, 4, 5, 9, 14, 19) in artifact, 6 in registry, exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
 
 ## Project Phases
 - **M-6A.1**: Dimensionality Analysis (`IMPLEMENTED`)
