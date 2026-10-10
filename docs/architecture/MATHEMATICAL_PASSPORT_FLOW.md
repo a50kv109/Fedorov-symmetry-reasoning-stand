@@ -10,7 +10,7 @@
 In FSS V1, mathematical passports feature both a declarative metadata layer and a validated executable integration slice for SG-002 ($P\bar{1}$).
 
 ### Current Verified Flow (SG-002 Baseline):
-$$\text{Canonical Registry (`core/registry.ts`)} \longrightarrow \text{SG-002 Test (`core/passport_verification.test.ts`)} \longrightarrow \text{Exact Math Checks (`ExactRational`, $Wc+w=c$)} \longrightarrow \text{Computed Results (`fixedPointOk && pointTransformOk`)} \longrightarrow \text{Visualization DTO (`createSG002VisualizationPayload`)}$$
+$$\text{Canonical Registry (`core/registry.ts`)} \longrightarrow \text{SG-002 Test (`core/passport_verification.test.ts`)} \longrightarrow \text{Exact Math Checks (`ExactRational`, $Wc+w=c$, independent $P'=-P$)} \longrightarrow \text{Computed Results (`fixedPointOk && pointTransformOk`)} \longrightarrow \text{Visualization DTO (`createSG002VisualizationPayload`)}$$
 
 ### Target / Proposed Flow (Deferred):
 $$\text{YAML Passport} \longrightarrow \text{Runtime YAML Loader} \longrightarrow \text{Schema Validation} \longrightarrow \text{Automated Contract Dispatch} \longrightarrow \text{Verification Result} \longrightarrow \text{Universal Visualizer UI}$$
@@ -24,6 +24,6 @@ $$\text{YAML Passport} \longrightarrow \text{Runtime YAML Loader} \longrightarro
 2. **Declarative Metadata & Types:**
    - YAML files (`docs/math/*.passport.yaml`) and TypeScript types (`core/schema/passport_schema.ts`) serve as descriptive specifications and type contracts. (Runtime YAML loading is deferred).
 3. **Deterministic Verification:**
-   - Executable methods in `core/group_properties.ts` and test assertions in `core/passport_verification.test.ts` evaluate SG-002 operations using exact rational arithmetic (`ExactRational`).
+   - Executable methods in `core/group_properties.ts` and test assertions in `core/passport_verification.test.ts` evaluate SG-002 operations using exact rational arithmetic (`ExactRational`), including explicit coordinate checks for the inversion center and independent verification of transformed test points.
 4. **Visualization Boundary Contract:**
    - `core/visualization_contract.ts` packages exact vectors (`ExactVector3` using `ExactRational`) and invariant flags into immutable payloads (`SG002VisualizationPayload`). Exact precision is preserved up to the boundary.

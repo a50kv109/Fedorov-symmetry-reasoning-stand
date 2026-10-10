@@ -170,13 +170,13 @@ A chronological log of research and development stages for FSS.
 - **Integrity Guarantee**: Zero modifications to code, tests, or reference datasets.
 - **Status**: `COMPLETED`
 
-### Mathematical Passport V1 / SG-002 Validation Checkpoint
-- **Objective**: Establish and validate the baseline vertical integration slice for Mathematical Passport V1 using SG-002 ($P\bar{1}$).
+### Mathematical Passport V1 / SG-002 Validation Checkpoint (Corrected Audit)
+- **Objective**: Establish and validate the baseline vertical integration slice for Mathematical Passport V1 using SG-002 ($P\bar{1}$), including audit corrections for explicit inversion center coordinate checks and independent point transformation verification.
 - **Verified Checks**:
   1. Inversion matrix $W = -I$.
-  2. Exact inversion center $c = (0, 0, 0)$.
+  2. Explicit coordinate checks for inversion center ($c = (0/1, 0/1, 0/1)$).
   3. Fixed point equation $Wc + w = c$ evaluated via exact rational arithmetic.
-  4. Test point transformation $P' = WP + w$ using registry operations.
+  4. Independent point transformation $P' = WP + w$ verified against expected coordinates $(-1/4, -1/3, -1/2)$ for test point $P = (1/4, 1/3, 1/2)$.
   5. Computed boolean results `fixedPointOk` and `pointTransformOk`.
   6. Result flag `satisfied = fixedPointOk && pointTransformOk`.
   7. Transmission of values into visualization DTO (`createSG002VisualizationPayload`).

@@ -28,9 +28,9 @@ The **Mathematical Passport** is a structured, declarative metadata and verifica
 
 The validated baseline test (`core/passport_verification.test.ts`) explicitly checks 7 criteria for SG-002 ($P\bar{1}$):
 1. Inversion matrix $W = -I$.
-2. Exact inversion center $c = (0, 0, 0)$.
+2. Exact inversion center coordinates $c = (0/1, 0/1, 0/1)$.
 3. Fixed point equation $Wc + w = c$.
-4. Test point transformation $P' = WP + w$ using registry operations.
+4. Independent point transformation $P' = WP + w$ verified against expected $(-1/4, -1/3, -1/2)$.
 5. Computed boolean results `fixedPointOk` and `pointTransformOk`.
 6. Result flag `satisfied = fixedPointOk && pointTransformOk`.
 7. Transmission of computed values into the visualization DTO (`createSG002VisualizationPayload`).
@@ -53,7 +53,7 @@ $$\text{Registry} \longrightarrow \text{SG-002 Test} \longrightarrow \text{Exact
 |---|---|
 | `npx tsx core/passport_verification.test.ts` | **PASS** (Exit code 0) |
 | `npm run lint` (`tsc --noEmit`) | **PASS** (Exit code 0) |
-| `npm run build` (`vite build`) | **PASS** (Exit code 0) |
+| `npm run build` (`vite build`)| **PASS** (Exit code 0) |
 
 ---
 
