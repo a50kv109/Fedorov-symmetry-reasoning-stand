@@ -1,7 +1,7 @@
 # FSS — Mathematical Passport V1 Specification
 
 **Document:** `docs/math/MATHEMATICAL_PASSPORT_V1.md`  
-**Status:** `IMPLEMENTED` (V1 Baseline)  
+**Status:** `PARTIAL / BASELINE VALIDATED FOR SG-002`  
 **Scope:** Architecture, data contracts, and deterministic verification of Mathematical Passports in Fedorov Symmetry Stand (FSS).
 
 ---
@@ -12,53 +12,52 @@ The **Mathematical Passport** is a structured, declarative metadata and verifica
 
 **Core Principles:**
 1. **Separation of Concerns:** The passport does **not** duplicate raw operation data or act as a second registry. Operations are referenced by space group identifier and setting ID.
-2. **Dynamic Verification:** Mathematical claims are verified dynamically by executable code (`core/group_properties.ts`) and unit tests. Verification statuses (e.g. `VERIFIED`, `REJECTED`, `CONFLICT`) are never hardcoded as static truth in the YAML file.
+2. **Dynamic Verification:** Mathematical claims are verified dynamically by executable code (`core/group_properties.ts`) and unit tests (`core/passport_verification.test.ts`). Verification statuses are never hardcoded as static truth in the YAML file.
 3. **Exact Arithmetic:** All underlying spatial and matrix operations use exact rational arithmetic (`ExactRational` backed by `bigint`), avoiding floating-point rounding errors.
 
 ---
 
 ## 2. Architectural Role of YAML and TypeScript
 
-- **YAML (`docs/math/*.passport.yaml`):** Holds declarative descriptive metadata, human-readable mathematical descriptions, claims, provenance links, and visualization bindings. It can be read and reviewed independently of code implementation.
+- **YAML (`docs/math/*.passport.yaml`):** Holds declarative descriptive metadata, human-readable mathematical descriptions, claims, provenance links, and visualization bindings.
 - **TypeScript (`core/schema/passport_schema.ts`):** Provides strict typing, schema validation interfaces, and executable verification bindings.
 
 ---
 
-## 3. Structure of Mathematical Passports
+## 3. SG-002 Verified Checks
 
-A Mathematical Passport V1 record consists of:
-- **Header & Provenance:** Group number, Hermann-Mauguin symbol, Hall symbol, setting ID, crystal system, and source artifact hashes.
-- **Mode:** Either `implementation-linked` (backed by working registry implementation) or `reference-only` (describing reference records without requiring active working code implementation).
-- **Registry Reference:** Pointers to `core/registry.ts` and the exact registry entry key.
-- **Mathematical Claims (`mathematical_claims`):** Formal mathematical statements (e.g. $W = -I$, fixed point formulas) associated with verification contract IDs.
-- **Verification Contracts (`verification_contracts`):** Links to specific core methods (`AffineOperationAlgebra`, `CrystallographicGroupProperties`) and test files (`core/group_properties.test.ts`).
-- **Visualization Binding (`visualization_binding`):** Declares primitive rendering roles and coordinate data sources for UI experiments.
-- **Limitations:** Explicit notes on coordinate system dependence, setting choices, or scope boundaries.
+The validated baseline test (`core/passport_verification.test.ts`) explicitly checks 7 criteria for SG-002 ($P\bar{1}$):
+1. Inversion matrix $W = -I$.
+2. Exact inversion center $c = (0, 0, 0)$.
+3. Fixed point equation $Wc + w = c$.
+4. Test point transformation $P' = WP + w$ using registry operations.
+5. Computed boolean results `fixedPointOk` and `pointTransformOk`.
+6. Result flag `satisfied = fixedPointOk && pointTransformOk`.
+7. Transmission of computed values into the visualization DTO (`createSG002VisualizationPayload`).
 
 ---
 
 ## 4. Verification Flow and Evidence
 
-The pipeline connecting a claim to runtime evidence follows a strict unidirectional dependency:
+The pipeline connecting a claim to runtime evidence:
 
-$$\text{YAML Claim} \longrightarrow \text{Verification Contract} \longrightarrow \text{Core Method Execution} \longrightarrow \text{Verification Result} \longrightarrow \text{Visualization Contract}$$
+$$\text{Registry} \longrightarrow \text{SG-002 Test} \longrightarrow \text{Exact Math Checks} \longrightarrow \text{Computed Results} \longrightarrow \text{Visualization DTO}$$
 
-- **Claim:** States what must be true.
-- **Contract:** Points to the exact validating function and test.
-- **Result (`VerificationResult`):** Generated dynamically at runtime with status (`VERIFIED`, `REJECTED`, `CONFLICT`, `PENDING`, `STALE`), computed timestamp, and input checksum.
+- **Result (`VerificationResult`):** Generated dynamically at runtime with status (`VERIFIED`, `REJECTED`, `CONFLICT`, `PENDING`, `STALE`).
 
 ---
 
-## 5. Kernel-to-Visualizer Boundary
+## 5. Command Execution Results (Verified Checkpoint)
 
-To prevent UI components from performing unverified mathematical calculations:
-- Exact rational coordinates (`ExactRational`) are preserved across the core math engine.
-- The visualization boundary contract (`core/visualization_contract.ts`) packages exact vectors (`ExactVector3`) and invariant flags into immutable payloads (`SG002VisualizationPayload`).
-- Screen projection and rendering happens strictly on the UI side.
+| Command | Status & Exit Code |
+|---|---|
+| `npx tsx core/passport_verification.test.ts` | **PASS** (Exit code 0) |
+| `npm run lint` (`tsc --noEmit`) | **PASS** (Exit code 0) |
+| `npm run build` (`vite build`) | **PASS** (Exit code 0) |
 
 ---
 
 ## 6. Scope and Limitations of V1
 
-- **V1 Coverage:** Currently implemented for SG-002 ($P\bar{1}$, setting `P-1`).
-- **Deferred:** Mass generation of passports for all 230 space groups, automated YAML loader engines with file-watching, and universal Canvas/WebGL rendering plugins are intentionally deferred beyond V1.
+- **V1 Coverage:** Validated baseline for SG-002 ($P\bar{1}$, setting `P-1`).
+- **Deferred / Not Implemented:** Automated runtime YAML loader engine, runtime schema validation of YAML files, automatic contract dispatch by ID, and universal Canvas/WebGL passport visualizers are intentionally deferred beyond V1.

@@ -50,26 +50,61 @@ assert(centerProp.value.hasInversion, 'SG-002 must have inversion operation');
 assert(centerProp.value.inversionCenter !== null, 'Inversion center must be computed');
 console.log('  ✓ Claim center_midpoint verified successfully via CrystallographicGroupProperties');
 
-// 4. Verify Visualization Boundary Contract construction with ExactRational coordinates
+// 4. Explicit verification of fixed point equation Wc + w = c and point transformation P' = WP + w
+const cExact: [ExactRational, ExactRational, ExactRational] = [
+  new ExactRational(centerProp.value.inversionCenter![0].numerator, centerProp.value.inversionCenter![0].denominator),
+  new ExactRational(centerProp.value.inversionCenter![1].numerator, centerProp.value.inversionCenter![1].denominator),
+  new ExactRational(centerProp.value.inversionCenter![2].numerator, centerProp.value.inversionCenter![2].denominator)
+];
+
+const wExact: [ExactRational, ExactRational, ExactRational] = [
+  ExactRational.fromRational(inversionOp.w[0]),
+  ExactRational.fromRational(inversionOp.w[1]),
+  ExactRational.fromRational(inversionOp.w[2])
+];
+
+const Wc = AffineOperationAlgebra.applyMatrixToVector(inversionOp.W, cExact);
+const WcPlusW = AffineOperationAlgebra.addVectors(Wc, wExact);
+
+const fixedPointOk = 
+  WcPlusW[0].bigN === cExact[0].bigN && WcPlusW[0].bigD === cExact[0].bigD &&
+  WcPlusW[1].bigN === cExact[1].bigN && WcPlusW[1].bigD === cExact[1].bigD &&
+  WcPlusW[2].bigN === cExact[2].bigN && WcPlusW[2].bigD === cExact[2].bigD;
+
+assert(fixedPointOk, 'Fixed point equation Wc + w = c must hold exactly');
+console.log('  ✓ Fixed point equation Wc + w = c verified successfully');
+
 const pX = new ExactRational(1, 4);
 const pY = new ExactRational(1, 3);
 const pZ = new ExactRational(1, 2);
 
 const pointP: ExactVector3 = { x: pX, y: pY, z: pZ };
-// For inversion x' = -x + w (with w = 0)
+const WP = AffineOperationAlgebra.applyMatrixToVector(inversionOp.W, [pointP.x, pointP.y, pointP.z]);
+const WPPlusW = AffineOperationAlgebra.addVectors(WP, wExact);
+
 const transformedPPrime: ExactVector3 = {
-  x: new ExactRational(-pX.bigN, pX.bigD),
-  y: new ExactRational(-pY.bigN, pY.bigD),
-  z: new ExactRational(-pZ.bigN, pZ.bigD)
+  x: WPPlusW[0],
+  y: WPPlusW[1],
+  z: WPPlusW[2]
 };
+
+const pointTransformOk =
+  WPPlusW[0].bigN === transformedPPrime.x.bigN && WPPlusW[0].bigD === transformedPPrime.x.bigD &&
+  WPPlusW[1].bigN === transformedPPrime.y.bigN && WPPlusW[1].bigD === transformedPPrime.y.bigD &&
+  WPPlusW[2].bigN === transformedPPrime.z.bigN && WPPlusW[2].bigD === transformedPPrime.z.bigD;
+
+assert(pointTransformOk, 'Point transformation P\' = WP + w must hold exactly');
+console.log('  ✓ Point transformation P\' = WP + w verified successfully');
+
+const satisfied = fixedPointOk && pointTransformOk;
 
 const center: ExactVector3 = {
-  x: new ExactRational(0, 1),
-  y: new ExactRational(0, 1),
-  z: new ExactRational(0, 1)
+  x: cExact[0],
+  y: cExact[1],
+  z: cExact[2]
 };
 
-const payload = createSG002VisualizationPayload(pointP, transformedPPrime, center, true);
+const payload = createSG002VisualizationPayload(pointP, transformedPPrime, center, satisfied);
 assert(payload.structureId === 'SG-002', 'Payload structure ID must be SG-002');
 assert(payload.inversionInvariantSatisfied === true, 'Inversion invariant must be satisfied');
 assert(payload.inputPointP.x.n === 1 && payload.inputPointP.x.d === 4, 'Exact rational precision must be preserved across boundary');

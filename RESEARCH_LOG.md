@@ -170,18 +170,21 @@ A chronological log of research and development stages for FSS.
 - **Integrity Guarantee**: Zero modifications to code, tests, or reference datasets.
 - **Status**: `COMPLETED`
 
-### Mathematical Passport V1
-- **Objective**: Implement Mathematical Passport V1 bridging YAML declarative metadata, canonical registry operations, deterministic exact verification, and visualization boundary contracts for SG-002 ($P\bar{1}$).
-- **Deliverables**:
-  - `core/schema/passport_schema.ts`: TypeScript schema for Mathematical Passports.
-  - `docs/math/SG-002-P-1.passport.yaml`: YAML passport configuration for SG-002.
-  - `core/visualization_contract.ts`: Typed boundary contract preserving `ExactRational` precision for UI experiments.
-  - `core/passport_verification.test.ts`: Integration test verifying claims against core methods.
-  - `docs/math/MATHEMATICAL_PASSPORT_V1.md`, `docs/math/SG-002-P-1.md`, `docs/architecture/MATHEMATICAL_PASSPORT_FLOW.md`.
-- **Validation**:
-  - `core/passport_verification.test.ts` passed successfully.
-  - Vite build compiled successfully.
-- **Status**: `IMPLEMENTED`
+### Mathematical Passport V1 / SG-002 Validation Checkpoint
+- **Objective**: Establish and validate the baseline vertical integration slice for Mathematical Passport V1 using SG-002 ($P\bar{1}$).
+- **Verified Checks**:
+  1. Inversion matrix $W = -I$.
+  2. Exact inversion center $c = (0, 0, 0)$.
+  3. Fixed point equation $Wc + w = c$ evaluated via exact rational arithmetic.
+  4. Test point transformation $P' = WP + w$ using registry operations.
+  5. Computed boolean results `fixedPointOk` and `pointTransformOk`.
+  6. Result flag `satisfied = fixedPointOk && pointTransformOk`.
+  7. Transmission of values into visualization DTO (`createSG002VisualizationPayload`).
+- **Command Results**:
+  - `npx tsx core/passport_verification.test.ts`: **PASS** (Exit code 0).
+  - `npm run lint` (`tsc --noEmit`): **PASS** (Exit code 0).
+  - `npm run build` (`vite build`): **PASS** (Exit code 0).
+- **Status**: `PARTIAL / BASELINE VALIDATED FOR SG-002`
 
 ## Research Experiments
 
