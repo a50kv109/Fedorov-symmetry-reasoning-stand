@@ -32,7 +32,7 @@ EXPECTED_CPP_SHA256 = "fae1e4e6f297bbca5ff22126e5f99a54b60d8bcda0f003256558d2bb6
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "source")
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "crystallography", "gemmi_benchmark_4.json")
 
-TARGET_GROUPS = [1, 2, 14, 19]
+TARGET_GROUPS = [1, 2, 5, 14, 19]
 
 DEN = 24  # Gemmi denominator for fractional symmetry operations
 
@@ -194,10 +194,6 @@ def parse_hall_generators(hall_str: str):
         hall = hall[1:].strip()
 
     lattice = hall[0]
-    if lattice != 'P':
-        raise NotImplementedError(f"Benchmark scope covers primitive 'P' lattices, got: {lattice}")
-
-    parts = hall[1:].strip().split()
     ops = []
     
     # Always starts with Identity
@@ -205,6 +201,13 @@ def parse_hall_generators(hall_str: str):
         "W": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
         "w": [0, 0, 0]
     })
+    
+    if lattice == 'C':
+        ops.append({"W": [[1, 0, 0], [0, 1, 0], [0, 0, 1]], "w": [12, 12, 0]})
+    elif lattice != 'P':
+        raise NotImplementedError(f"Benchmark scope covers 'P' and 'C' lattices, got: {lattice}")
+
+    parts = hall[1:].strip().split()
 
     counter = 0
     prev = 0
@@ -351,7 +354,8 @@ def extract_benchmark_catalog():
         1: [e for e in all_entries if e["number"] == 1 and e["ccp4"] == 1][0],
         2: [e for e in all_entries if e["number"] == 2 and e["ccp4"] == 2][0],
         14: [e for e in all_entries if e["number"] == 14 and e["qualifier"] == "b1"][0],  # Standard ITA setting P 1 21/c 1
-        19: [e for e in all_entries if e["number"] == 19 and e["ccp4"] == 19][0]
+        19: [e for e in all_entries if e["number"] == 19 and e["ccp4"] == 19][0],
+        5: [e for e in all_entries if e["number"] == 5][0]
     }
 
     records = []
@@ -359,6 +363,7 @@ def extract_benchmark_catalog():
     system_map = {
         1: "triclinic",
         2: "triclinic",
+        5: "monoclinic",
         14: "monoclinic",
         19: "orthorhombic"
     }
@@ -366,6 +371,7 @@ def extract_benchmark_catalog():
     setting_id_map = {
         1: "P1",
         2: "P-1",
+        5: "C2",
         14: "P21/c",
         19: "P212121"
     }

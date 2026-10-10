@@ -15,6 +15,7 @@ A chronological log of research and development stages for FSS.
 | KB-14 | Derived Group Properties | Linear parts, centrosymmetry, exact powers, unreduced translations | `IMPLEMENTED` |
 | KB-15 | Evidence-Backed Reports | Multi-level verification, structured PropertyEvidence, traceability | `IMPLEMENTED` |
 | KB-15A | Audit Findings Reconciliation | Documentation update based on Grok audit ZIP analysis | `COMPLETED` |
+| KB-16 | Centered Lattice (#5, C2) | Added C2, implemented C-centering logic, verified 4 ops | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
 
 ## Stage Details

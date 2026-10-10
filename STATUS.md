@@ -5,7 +5,7 @@
 ## Research Checkpoint & Audit Dossier
 - Complete documentation freeze and repository audit: [`docs/RESEARCH_CHECKPOINT.md`](docs/RESEARCH_CHECKPOINT.md).
 - Status: **Ready for independent external review (Grok)**.
-- Scope: 4 benchmark space groups (Nos. 1, 2, 14, 19), exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
+- Scope: 5 benchmark space groups (Nos. 1, 2, 5, 14, 19), exact rational affine arithmetic, origin shift proofs, and 8-level evidence contracts.
 
 ## Project Phases
 - **M-6A.1**: Dimensionality Analysis (`IMPLEMENTED`)
@@ -16,6 +16,7 @@
 - **KB-13A**: Controlled Reference Catalog Integration (`IMPLEMENTED`)
 - **KB-14**: Derived Group Properties from Exact Operations (`IMPLEMENTED`)
 - **KB-15**: Evidence-Backed Mathematical Property Reports (`IMPLEMENTED`)
+- **KB-16**: Centered Lattice (#5, C2) (`COMPLETED`)
 
 ## Component Status
 | Component | Status | Note |

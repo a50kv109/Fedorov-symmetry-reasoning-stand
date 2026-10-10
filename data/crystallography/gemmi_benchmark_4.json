@@ -10,8 +10,8 @@
     "license": "MPL-2.0",
     "attribution": "International Tables for Crystallography (ITA)",
     "extractorVersion": "1.0.0",
-    "recordCount": 4,
-    "sha256Checksum": "478cb1c0578437cb34c9f656b8d38e8c2ce705ba4e7a929defc24d40ab0e210c",
+    "recordCount": 5,
+    "sha256Checksum": "9b5badbb06357f6d859acbd315b26611782a0014cbe9c986459dae28625b4c8e",
     "isSourceVerified": true
   },
   "records": [
@@ -145,6 +145,162 @@
             }
           ],
           "triplet": "-x,-y,-z"
+        }
+      ],
+      "provenance": {
+        "sourceName": "Gemmi",
+        "sourceRepository": "https://github.com/project-gemmi/gemmi",
+        "sourceCommit": "5cc1c23c6007e0e6cbd69289c6f7c0bff50e943e",
+        "tablePath": "src/symmetry.cpp:spacegroup_tables::main",
+        "license": "MPL-2.0",
+        "attribution": "International Tables for Crystallography (ITA)",
+        "isVerified": true
+      }
+    },
+    {
+      "spaceGroupNumber": 5,
+      "settingId": "C2",
+      "hmSymbol": "C 1 2 1",
+      "hallSymbol": "C 2y",
+      "crystalSystem": "monoclinic",
+      "centering": "P",
+      "operationsCount": 4,
+      "operations": [
+        {
+          "W": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "w": [
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            }
+          ],
+          "triplet": "x,y,z"
+        },
+        {
+          "W": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "w": [
+            {
+              "numerator": 1,
+              "denominator": 2
+            },
+            {
+              "numerator": 1,
+              "denominator": 2
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            }
+          ],
+          "triplet": "x+1/2,y+1/2,z"
+        },
+        {
+          "W": [
+            [
+              -1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              -1
+            ]
+          ],
+          "w": [
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            }
+          ],
+          "triplet": "-x,y,-z"
+        },
+        {
+          "W": [
+            [
+              -1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              -1
+            ]
+          ],
+          "w": [
+            {
+              "numerator": 1,
+              "denominator": 2
+            },
+            {
+              "numerator": 1,
+              "denominator": 2
+            },
+            {
+              "numerator": 0,
+              "denominator": 1
+            }
+          ],
+          "triplet": "-x+1/2,y+1/2,-z"
         }
       ],
       "provenance": {

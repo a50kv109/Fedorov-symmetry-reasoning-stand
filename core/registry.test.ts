@@ -14,7 +14,8 @@ const expectedCounts: Record<string, number> = {
   "P1": 1,
   "P-1": 2,
   "P212121": 4,
-  "P21/c": 4
+  "P21/c": 4,
+  "C2": 4
 };
 
 // Helper for rational arithmetic
