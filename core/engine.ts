@@ -317,109 +317,71 @@ export function runSymmetryExperiment(input: ExperimentInput): Evidence {
   }
 
   // 2. PUSHFORWARD VERTEX MATCHING: Q(v_i) ≈ v_{pi(i)}
-  const correspondence: Correspondence[] = [];
-  const claimedTargetIndices = new Set<number>();
-  let maxDelta = 0.0;
-  let sumDelta = 0.0;
-  let semanticMismatch: {
-    originId: string;
-    originType?: string;
-    targetId: string;
-    targetType?: string;
-    dist: number;
-  } | null = null;
+  // Use bipartite matching to find a bijection
+  const numVertices = originalState.length;
+  const distMatrix: number[][] = Array.from({ length: numVertices }, () => Array(numVertices).fill(0));
+  const compatibilityMatrix: boolean[][] = Array.from({ length: numVertices }, () => Array(numVertices).fill(false));
 
-  for (let i = 0; i < originalState.length; i++) {
-    const origin = originalState[i]; // v_i
-    const transformedCoords = transformedState[i].coords; // Q(v_i)
-
-    let bestCompatibleDist = Infinity;
-    let bestCompatibleIndex = -1;
-
-    let bestOverallDist = Infinity;
-    let bestOverallIndex = -1;
-
-    for (let j = 0; j < originalState.length; j++) {
-      const canonicalTarget = originalState[j]; // v_j
-      const dist = euclideanDistance(transformedCoords, canonicalTarget.coords);
-
-      if (dist < bestOverallDist) {
-        bestOverallDist = dist;
-        bestOverallIndex = j;
-      }
-
-      if (areVertexTypesCompatible(origin.type, canonicalTarget.type)) {
-        if (dist < bestCompatibleDist) {
-          bestCompatibleDist = dist;
-          bestCompatibleIndex = j;
-        }
-      }
+  for (let i = 0; i < numVertices; i++) {
+    for (let j = 0; j < numVertices; j++) {
+      distMatrix[i][j] = euclideanDistance(transformedState[i].coords, originalState[j].coords);
+      compatibilityMatrix[i][j] = areVertexTypesCompatible(originalState[i].type, originalState[j].type);
     }
-
-    let chosenIndex: number;
-    let chosenDist: number;
-
-    if (bestCompatibleIndex !== -1 && bestCompatibleDist <= epsilon) {
-      // Type-compatible candidate found within verification tolerance
-      chosenIndex = bestCompatibleIndex;
-      chosenDist = bestCompatibleDist;
-    } else if (
-      bestOverallIndex !== -1 &&
-      bestOverallDist <= epsilon &&
-      !areVertexTypesCompatible(origin.type, originalState[bestOverallIndex].type)
-    ) {
-      // Geometrically coincident/within-tolerance candidate found, but explicit type mismatch!
-      chosenIndex = bestOverallIndex;
-      chosenDist = bestOverallDist;
-      if (!semanticMismatch) {
-        semanticMismatch = {
-          originId: origin.id,
-          originType: origin.type,
-          targetId: originalState[bestOverallIndex].id,
-          targetType: originalState[bestOverallIndex].type,
-          dist: bestOverallDist
-        };
-      }
-    } else {
-      // Geometric distance exceeds tolerance
-      if (bestCompatibleIndex !== -1) {
-        chosenIndex = bestCompatibleIndex;
-        chosenDist = bestCompatibleDist;
-      } else {
-        chosenIndex = bestOverallIndex;
-        chosenDist = bestOverallDist;
-        if (!semanticMismatch && !areVertexTypesCompatible(origin.type, originalState[bestOverallIndex].type)) {
-          semanticMismatch = {
-            originId: origin.id,
-            originType: origin.type,
-            targetId: originalState[bestOverallIndex].id,
-            targetType: originalState[bestOverallIndex].type,
-            dist: bestOverallDist
-          };
-        }
-      }
-    }
-
-    claimedTargetIndices.add(chosenIndex);
-    if (chosenDist > maxDelta) {
-      maxDelta = chosenDist;
-    }
-    sumDelta += chosenDist;
-
-    const targetCanonical = originalState[chosenIndex];
-    correspondence.push({
-      originId: origin.id, // v_i
-      targetId: targetCanonical.id, // v_{pi(i)}
-      delta: chosenDist,
-      originCoords: origin.coords,
-      transformedCoords: transformedCoords,
-      targetCoords: targetCanonical.coords
-    });
   }
 
+  // Find a matching using backtracking/augmenting paths
+  const match = new Array(numVertices).fill(-1); // match[target] = origin
+  const used = new Array(numVertices).fill(false);
+
+  function canMatch(u: number): boolean {
+    for (let v = 0; v < numVertices; v++) {
+      if (!used[v] && compatibilityMatrix[u][v] && distMatrix[u][v] <= epsilon) {
+        used[v] = true;
+        if (match[v] === -1 || canMatch(match[v])) {
+          match[v] = u;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  let isBijective = true;
+  for (let i = 0; i < numVertices; i++) {
+    used.fill(false);
+    if (!canMatch(i)) {
+      isBijective = false;
+      break;
+    }
+  }
+
+  // Calculate correspondence
+  const correspondence: Correspondence[] = [];
+  let maxDelta = 0.0;
+  let sumDelta = 0.0;
+
+  if (isBijective) {
+    for (let v = 0; v < numVertices; v++) {
+      const u = match[v];
+      const dist = distMatrix[u][v];
+      
+      correspondence.push({
+        originId: originalState[u].id,
+        targetId: originalState[v].id,
+        delta: dist,
+        originCoords: originalState[u].coords,
+        transformedCoords: transformedState[u].coords,
+        targetCoords: originalState[v].coords
+      });
+      
+      if (dist > maxDelta) maxDelta = dist;
+      sumDelta += dist;
+    }
+  }
+  
+  const meanDelta = numVertices > 0 ? sumDelta / numVertices : 0.0;
+
   // 3. GLOBAL BIJECTIVITY, TYPING & PREDICATE VERIFICATION
-  const isBijective = claimedTargetIndices.size === originalState.length;
-  const meanDelta = originalState.length > 0 ? sumDelta / originalState.length : 0.0;
 
   // Build vertex mapping dictionary for fast lookup: originId -> targetId
   const vertexMapping = new Map<string, string>();
@@ -468,10 +430,8 @@ export function runSymmetryExperiment(input: ExperimentInput): Evidence {
   let verdict: ExperimentVerdict = 'REJECTED';
   let rejectionReason: string | undefined = undefined;
 
-  if (semanticMismatch) {
-    rejectionReason = `SEMANTIC_TYPE_MISMATCH (origin '${semanticMismatch.originId}' [type: ${semanticMismatch.originType || 'untyped'}] cannot map to target '${semanticMismatch.targetId}' [type: ${semanticMismatch.targetType || 'untyped'}], delta: ${semanticMismatch.dist.toFixed(8)})`;
-  } else if (!isBijective) {
-    rejectionReason = `NON_BIJECTIVE_VERTEX_MAPPING (mapped to ${claimedTargetIndices.size} unique targets out of ${originalState.length})`;
+  if (!isBijective) {
+    rejectionReason = `NON_BIJECTIVE_VERTEX_MAPPING (could not map all vertices bijectively)`;
   } else if (maxDelta > epsilon) {
     rejectionReason = `VERTICES_NOT_PRESERVED (max delta: ${maxDelta.toFixed(8)} > tolerance: ${epsilon.toFixed(8)})`;
   } else if (edgeMismatch) {
