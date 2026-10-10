@@ -2,7 +2,7 @@
 **Document:** `docs/RESEARCH_CHECKPOINT.md`  
 **Date:** 2026-10-10  
 **Status:** Pre-Audit Documentation Freeze (Prepared for Independent External Audit by Grok)  
-**Scope:** Controlled verification of 4 crystallographic space group benchmarks (Nos. 1, 2, 14, 19), affine exact arithmetic, and evidence generation.
+**Scope:** Controlled verification of 6 crystallographic space group benchmarks (Nos. 1, 2, 5, 9, 14, 19), affine exact arithmetic, and evidence generation.
 
 ---
 
@@ -61,7 +61,7 @@ The current codebase implements a multi-layer pipeline separating external refer
 | **Entries in local reference artifact** (`gemmi_benchmark_4.json`) | **6** | Verified on disk, SHA-256 records hash: `ba7f4517...` |
 | **Records passing structural validation** (`validateStructuralRecord`) | **6 / 6** | Tested in `core/schema/crystallographic_exchange.test.ts` |
 | **Records passing mathematical group validation** (`validateMathematicalGroup`) | **6 / 6** | Tested in `core/schema/crystallographic_exchange.test.ts` |
-| **Records compared with working catalog** (`CrystallographicComparator`) | **6 / 6** | Tested in `core/reference_loader.test.ts` (4 `MATCH`, 2 `SETTING_MISMATCH`) |
+| **Records compared with working catalog** (`CrystallographicComparator`) | **5 / 6** | 5 records compared (4 `MATCH`, 1 `SETTING_MISMATCH`); Group 9 not in registry. |
 | **Records in legacy working catalog** (`core/registry.ts`) | **5** | Nos. 1, 2, 5, 14, 19 |
 | **Records with full Evidence reports generated** (`property_evidence.ts`) | **6 / 6** | Tested in `core/property_evidence.test.ts` (24 total evidence items) |
 
@@ -75,7 +75,7 @@ The current codebase implements a multi-layer pipeline separating external refer
 | **2** | `P -1` | `-P 1` | `P-1` | triclinic | P | 2 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **14** | `P 1 21/c 1` | `-P 2ybc` | `P21/c` | monoclinic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
 | **5** | `C 1 2 1` | `C 2y` | `C2` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`MATCH`** (100% identical operations) |
-| **9** | `C 1 c 1` | `C -2yc` | `Cc` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`SETTING_MISMATCH`** (Origin shifted) |
+| **9** | `C 1 c 1` | `C -2yc` | `Cc` | monoclinic | C | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`NOT_COMPARABLE`** (Absent from registry) |
 | **19** | `P 21 21 21` | `P 2ac 2ab` | `P212121` | orthorhombic | P | 4 | Gemmi v0.7.5 (`5cc1c23c...`) | `SOURCE_VERIFIED` | **`SETTING_MISMATCH`** (Origin shifted by $(1/4, 1/4, 1/4)$, mathematical equivalence strictly proven) |
 
 ---
@@ -144,8 +144,9 @@ The current codebase implements a multi-layer pipeline separating external refer
    - *Status*: **Resolved and verified for the specific benchmark pair**.
    - *Evidence*: `OriginShiftAnalyzer.verifyEquivalenceUnderShift` proves that the reference Gemmi operations (ITA Vol. A standard) map 100% identically to `core/registry.ts` under origin shift $x_0 = (1/4, 1/4, 1/4)$. Furthermore, intrinsic screw translations $\tau = (1/2, 0, 0), (0, 1/2, 0), (0, 0, 1/2)$ are invariant between both presentations.
 6. **Centered Lattices (A, B, C, I, F, R)**:
-   - *Status*: **OPEN / UNRESOLVED**.
-   - *Limitation*: All 4 benchmark groups are primitive ($P$). Centering vectors (e.g. $(1/2, 1/2, 0)$ for $C$-centering) have not yet been tested in the pipeline.
+   - *Status*: **IMPLEMENTED FOR METADATA EXTRACTION & AXIOM VALIDATION**.
+   - *Evidence*: `scripts/extract_gemmi_data.py` extracts centering metadata. `crystallographic_exchange.test.ts` validates operations including centering translations.
+   - *Limitation*: General centering transformations (applying affine centering shift vectors to arbitrary structures) are not yet implemented. Benchmark currently includes 2 centered settings (Group 5, 9).
 7. **Alternative Settings and General Basis Changes ($P$)**:
    - *Status*: **OPEN / UNRESOLVED**.
    - *Limitation*: Pure origin shifts ($P=I$) are implemented. General linear changes of basis $P \in GL(3, \mathbb{Z})$ (e.g. unique axis $b$ vs $c$ in monoclinic, or cell choices 1, 2, 3) are not yet automated.

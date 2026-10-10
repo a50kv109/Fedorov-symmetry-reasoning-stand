@@ -144,19 +144,19 @@ A chronological log of research and development stages for FSS.
 ### FSS-KB-16 — Centered Lattice (#5, C2)
 - **Objective**: Extend benchmark with Space Group No. 5 (monoclinic, standard unique-axis-b, C2).
 - **Implementation**:
-  - Implemented C-centering logic in extractor and verified 4 operations.
+  - Implemented metadata extraction and axiom validation for C-centering. Verified 4 operations.
 - **Status**: `COMPLETED`
 
 ### FSS-KB-17 — Add Space Group No. 9 (Cc)
 - **Objective**: Extend benchmark with Space Group No. 9 (monoclinic, standard unique-axis-b, Cc).
 - **Implementation**:
   - Updated `scripts/extract_gemmi_data.py` to support `Cc` via Hall symbol `C -2yc`.
-  - Added group 9 to `TARGET_GROUPS`, `system_map`, `setting_id_map`.
-  - Regenerated `data/crystallography/gemmi_benchmark_4.json`.
+  - Added group 9 to `TARGET_GROUPS`.
+  - Regenerated `data/crystallography/gemmi_benchmark_4.json` (6 records total).
 - **Validation**:
   - Verified 4 operations derived from source `5cc1c23c...`.
   - Group 9 exhibits `centering: C`.
-  - Determinism verified: 100% bit-identical artifact across independent runs.
+  - Note: Group 9 is in the reference artifact but not currently in `core/registry.ts`.
 - **Status**: `COMPLETED`
 
 ### FSS-CHECKPOINT — Pre-Audit Documentation Freeze (KB-15 Checkpoint)
