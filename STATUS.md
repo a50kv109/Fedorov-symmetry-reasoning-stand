@@ -1,6 +1,6 @@
 # FSS - Status
 
-**Status:** Research Prototype (Pre-Audit Documentation Freeze — Checkpoint KB-15)
+**Status:** Research Prototype (Pre-Audit Documentation Freeze — Checkpoint KB-18)
 
 ## Research Checkpoint & Audit Dossier
 - Complete documentation freeze and repository audit: [`docs/RESEARCH_CHECKPOINT.md`](docs/RESEARCH_CHECKPOINT.md).
