@@ -135,8 +135,9 @@ The current codebase implements a multi-layer pipeline separating external refer
    - *Status*: **Resolved and verified**.
    - *Evidence*: Tested in `core/schema/crystallographic_exchange.test.ts` across identity existence, two-sided inverses, modular group closure, and duplicate operation detection.
 4. **Coordinate Origin Equivalence**:
-   - *Status*: **Resolved for pure translations**.
-   - *Evidence*: `OriginShiftAnalyzer` applies exact transformation $w' = (w + (W - I)x_0) \pmod 1$ in `ExactRational` arithmetic.
+   - *Status*: **Resolved for specific benchmark pair**.
+   - *Evidence*: `OriginShiftAnalyzer` proves that the reference Gemmi operations map identically to `core/registry.ts` ONLY under the specific candidate shift $x_0 = (1/4, 1/4, 1/4)$.
+   - *Limitation*: The system implements a single-candidate check (`candidateShift = (1/4, 1/4, 1/4)`), not a general $GL(3, \mathbb{Z})$ affine normalizer or search algorithm. Documented equivalence applies only to this pair in this setting.
 5. **Group 19 Discrepancy Resolution**:
    - *Status*: **Resolved and mathematically proven**.
    - *Evidence*: `OriginShiftAnalyzer.verifyEquivalenceUnderShift` proves that the reference Gemmi operations (ITA Vol. A standard) map 100% identically to `core/registry.ts` under origin shift $x_0 = (1/4, 1/4, 1/4)$. Furthermore, intrinsic screw translations $\tau = (1/2, 0, 0), (0, 1/2, 0), (0, 0, 1/2)$ are invariant between both presentations.
@@ -155,6 +156,12 @@ The current codebase implements a multi-layer pipeline separating external refer
 10. **Global Space Group Classification Claim**:
     - *Status*: **EXPLICITLY REJECTED**.
     - *Limitation*: FSS does not claim to classify arbitrary unknown affine groups into 230 types without reference lookup. All verdicts are strictly restricted to the evaluated record and setting.
+11. **Provenance Discrepancies**:
+    - *Status*: **Identified (Technical Debt)**.
+    - *Limitation*: The working catalog (`core/registry.ts`) references legacy provenance `6ea553a`. The reference artifact (`gemmi_benchmark_4.json`) uses verified v0.7.5 (`5cc1c23c...`). The reference pipeline treats the legacy registry as an external reference point, not as authoritative data.
+12. **Test Execution Environment**:
+    - *Status*: **Verified in Dev Environment**.
+    - *Limitation*: TypeScript-tests (`*.test.ts`) require installed `node_modules` and the full development environment. Automated runs in stripped or isolated audit environments (e.g., bare ZIP analysis) require `npm install` before test execution.
 
 ---
 

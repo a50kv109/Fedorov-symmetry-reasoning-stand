@@ -22,7 +22,7 @@
 | :--- | :--- | :--- |
 | `core/` (Geometry) | `IMPLEMENTED` | Tested (Registry-Free Support) |
 | `App` (UI/Server) | `BASELINE` | Minimal functional prototype |
-| `Discovery Engine` | `PARTIALLY_IMPLEMENTED`| Registry-free input enabled |
+| `Discovery Engine` | `NOT_IMPLEMENTED` | Registry-free input enabled (input only, no automated discovery). |
 | `Evidence Generation`| `IMPLEMENTED` | Geometric Evidence (M-5F) + Crystallographic PropertyEvidence (KB-15) |
 | `Reference Pipeline` | `IMPLEMENTED` | KB-10 contract + KB-11 extraction + KB-13A comparator + KB-14/15 properties & evidence |
 | `Experiments` | `COMPLETED` | EXP-02, EXP-03 finished |

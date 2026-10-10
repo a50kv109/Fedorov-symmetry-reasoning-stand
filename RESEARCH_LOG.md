@@ -14,6 +14,7 @@ A chronological log of research and development stages for FSS.
 | KB-13A | Controlled Reference Integration | Reference loader, OriginShiftAnalyzer, non-destructive comparator | `IMPLEMENTED` |
 | KB-14 | Derived Group Properties | Linear parts, centrosymmetry, exact powers, unreduced translations | `IMPLEMENTED` |
 | KB-15 | Evidence-Backed Reports | Multi-level verification, structured PropertyEvidence, traceability | `IMPLEMENTED` |
+| KB-15A | Audit Findings Reconciliation | Documentation update based on Grok audit ZIP analysis | `COMPLETED` |
 | CHECKPOINT | Pre-Audit Documentation Freeze | Audit dossier in `docs/RESEARCH_CHECKPOINT.md` prepared for external review | `COMPLETED` |
 
 ## Stage Details
@@ -129,6 +130,14 @@ A chronological log of research and development stages for FSS.
     4. `CrystallographicEvidenceGenerator`: Generates reports for individual records or entire benchmark suites.
   - `core/property_evidence.test.ts`: Complete test suite covering subject/setting linkage, operation references integrity, exact calculation concordance, data tampering detection, checksum protection, prevention of false promotion to `REFERENCE_VERIFIED`, permutation invariance, origin shift discrepancy preservation, incomplete record handling, and 100-run determinism.
 - **Status**: `IMPLEMENTED`
+
+### FSS-KB-15A — Audit Findings Reconciliation
+- **Objective**: Reconcile project documentation with independent audit findings (Grok ZIP analysis), specifically addressing provenance versions, origin shift scope, and epistemic status of tests.
+- **Findings Reconciled**:
+  1. *Origin Choice Equivalence*: Clarified that equivalence for Group 19 is proven for the specific pair (Gemmi vs Registry) under shift $p=(1/4, 1/4, 1/4)$. No universal solver for arbitrary basis/origin choices exists.
+  2. *Provenance*: Documented that manifest (`5cc1c23c...`) and registry (`6ea553a`) use different versions.
+  3. *Test Status*: Clarified that test `PASS` status refers to the local development environment (where `node_modules` is present); execution within a bare ZIP audit environment is constrained.
+- **Status**: `COMPLETED`
 
 ### FSS-CHECKPOINT — Pre-Audit Documentation Freeze (KB-15 Checkpoint)
 - **Objective**: Freeze repository state and establish comprehensive audit dossier before independent external review (Grok).
