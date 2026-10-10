@@ -201,7 +201,7 @@ PROVENANCE RECORD (Source Authenticity)
 | **Upstream Source Extract** | `data/source/gemmi_symmetry_5cc1c23c.cpp` | **Present** |
 | **Generated JSON Artifact** | `data/crystallography/gemmi_benchmark_4.json` | **Present** |
 | **Cryptographic Checksums** | Documented in `manifest` and verified in tests | **Present** |
-| **Test Suites** | `core/*.test.ts`, `core/schema/*.test.ts` | **Present (11 suites, verified in local development)** |
+| **Test Suites** | `core/*.test.ts`, `core/schema/*.test.ts` | **Present (11 suites, verified in local development environment)** |
 | **License & Attribution** | MPL-2.0, International Tables for Crystallography (ITA) noted in manifests | **Present** |
 | **Execution Scripts** | `package.json` (`npm run lint`, `npm run build`, `npm run dev`) | **Present** |
 | **Architecture Documentation**| `ARCHITECTURE.md`, `EVIDENCE_CONTRACT.md`, `RESEARCH_LOG.md`, `STATUS.md` | **Present** |
